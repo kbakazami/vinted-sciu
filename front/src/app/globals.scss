@@ -1,3 +1,83 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  @apply text-primary font-poppins text-sm;
+
+  @screen sm {
+    @apply text-base;
+  }
+}
+
+h1, .title {
+  @apply text-2xl;
+
+  @screen lg {
+    @apply text-4xl;
+  }
+}
+
+h2 {
+  @apply text-xl font-bold uppercase;
+
+  @screen lg {
+    @apply text-3xl;
+  }
+}
+
+.custom-container {
+    @apply px-4;
+
+  @screen lg {
+    @apply px-8;
+  }
+
+  @screen 2xl {
+    @apply px-32;
+  }
+}
+
+.btn {
+  @apply w-fit flex items-center gap-x-2.5 px-5 py-2 font-bold text-base uppercase text-white bg-gray-500 mx-auto;
+
+  @screen lg {
+    @apply text-xl;
+  }
+
+  &.btn-primary {
+    @apply bg-secondary-darker;
+  }
+
+  &.btn-secondary {
+    @apply bg-secondary;
+  }
+
+  &.btn-round {
+    @apply w-12 h-12 rounded-full p-0 justify-center;
+  }
+
+  &.card {
+    @apply m-0 w-8 h-8;
+  }
+}
+
+.grid-product-categories-wrapper {
+  @apply grid grid-cols-1 gap-y-5 mt-5 mb-12;
+
+  @screen sm {
+    @apply grid grid-cols-2 gap-x-5;
+  }
+
+  @screen lg {
+    @apply grid-cols-4;
+  }
+}
+
+.homepage-picture {
+  @apply h-80 w-full object-cover;
+
+  @screen lg {
+    @apply h-auto w-1/2;
+  }
+}
