@@ -8,14 +8,12 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
-final class ItemsAdmin extends Admin
+final class CategoriesAdmin extends Admin
 {
     protected function configureShowFields(ShowMapper $show): void
     {
         $show
             ->add('title')
-            ->add('description')
-            ->add('categories')
         ;
     }
 
@@ -23,8 +21,6 @@ final class ItemsAdmin extends Admin
     {
         $form
             ->add('title')
-            ->add('description')
-            ->add('categories')
         ;
     }
 
@@ -32,8 +28,6 @@ final class ItemsAdmin extends Admin
     {
         $filter
             ->add('title')
-            ->add('description')
-            ->add('categories')
         ;
     }
 
@@ -41,8 +35,6 @@ final class ItemsAdmin extends Admin
     {
         $list
             ->add('title')
-            ->add('description')
-            ->add('categories')
             ->add('_action', 'actions', [
                 'actions' => [
                     'show' => [],
