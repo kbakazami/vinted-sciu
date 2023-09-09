@@ -61,6 +61,14 @@ h2 {
     @apply m-0 w-8 h-8;
   }
 
+  &.nav {
+    @apply w-10 h-10 m-0;
+  }
+
+  &.menu {
+    @apply text-base bg-secondary normal-case font-normal text-primary px-7;
+  }
+
   &.pagination {
     @apply text-primary text-base normal-case font-normal m-0 py-3;
 
@@ -108,6 +116,23 @@ h2 {
 
   @screen lg {
     @apply h-auto w-1/2;
+  }
+}
+
+.nav-wrapper {
+  .mobile-link {
+
+    &.open {
+      @apply p-4 border-b border-secondary-darker;
+    }
+
+    .mobile-open {
+      @apply w-auto bg-transparent m-0 p-0 text-primary font-normal normal-case;
+    }
+  }
+
+  &.open {
+    @apply absolute inset-x-0 top-20 bottom-0 bg-white pb-8;
   }
 }
 
