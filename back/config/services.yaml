@@ -35,3 +35,15 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, label: Categories }
 
+    admin.mutualHelp:
+        class: App\Admin\MutualHelpAdmin
+        arguments: [ ~, App\Entity\MutualHelp, ~ ]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: MutualHelp }
+
+    admin.mutualAttributes:
+        class: App\Admin\MutualAttributesAdmin
+        arguments: [ ~, App\Entity\MutualAttributes, ~ ]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: MutualAttributes }
+
