@@ -15,6 +15,7 @@ class MutualAttributesAdmin extends Admin
     {
         $show
             ->add('name')
+            ->add('description')
         ;
     }
 
@@ -22,6 +23,7 @@ class MutualAttributesAdmin extends Admin
     {
         $form
             ->add('name')
+            ->add('description')
         ;
     }
 
@@ -29,6 +31,7 @@ class MutualAttributesAdmin extends Admin
     {
         $filter
             ->add('name')
+            ->add('description')
         ;
     }
 
@@ -37,6 +40,7 @@ class MutualAttributesAdmin extends Admin
         $list
             ->add('id')
             ->add('name')
+            ->add('description')
             ->add('_action', 'actions', [
                 'actions' => [
                     'show' => [],

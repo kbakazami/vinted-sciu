@@ -27,23 +27,23 @@ services:
         class: App\Admin\ItemsAdmin
         arguments: [~, App\Entity\Items, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: Items }
+            - { name: sonata.admin, manager_type: orm, label: Article }
 
     admin.categories:
         class: App\Admin\CategoriesAdmin
         arguments: [~, App\Entity\Categories, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: Categories }
+            - { name: sonata.admin, manager_type: orm, label: Catégorie }
 
     admin.mutualHelp:
         class: App\Admin\MutualHelpAdmin
         arguments: [ ~, App\Entity\MutualHelp, ~ ]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: MutualHelp }
+            - { name: sonata.admin, manager_type: orm, label: Aide Mutuelle }
 
     admin.mutualAttributes:
         class: App\Admin\MutualAttributesAdmin
         arguments: [ ~, App\Entity\MutualAttributes, ~ ]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: MutualAttributes }
+            - { name: sonata.admin, manager_type: orm, label: Catégorie d'aide mutuelle }
 
