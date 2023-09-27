@@ -1,13 +1,8 @@
-export default function Pagination(props) {
+import {useState} from "react";
 
-    const pagesCount = Math.ceil(props.items / 12);
+export default function PaginationCustom(props) {
 
-    // console.log('pagesCount');
-    // console.log(pagesCount);
-    // console.log('---------------------');
-    // console.log('props.items');
-    // console.log(props.items);
-    // console.log('---------------------');
+    const pagesCount = Math.ceil(props.items / props.pageSize);
 
     if(pagesCount === 1)
     {
@@ -16,18 +11,47 @@ export default function Pagination(props) {
 
     const pages = Array.from({ length: pagesCount}, (_, i) => i + 1);
 
+    let ellipsesLastPageDisplay = null;
+    const ellipsesLastPage = () => {
+        if((props.currentPage + 4) < pages.length || (props.currentPage + 5) <= pages.length)
+        {
+            ellipsesLastPageDisplay = <>
+                <div className={'btn btn-secondary square'}>&hellip;</div>
+                <button className={'btn btn-secondary square'} onClick={() => props.onPageChange(pages.length)}>{pages.length}</button>
+            </>
+        }
+    }
+
+    const paginationButton = pages.map((page, key) => {
+        if(page <= props.maxPageLimit && page >= props.minPageLimit)
+        {
+            ellipsesLastPage();
+            return (
+                <button key={key} onClick={() => props.onPageChange(page)} className={`btn btn-secondary square ${page === props.currentPage ? 'active' : ''}`}>
+                    {page}
+                </button>
+            )
+        } else {
+            return null;
+        }
+    });
+
     return (
-        <div className={"flex flex-row gap-x-4"}>
-            {
-                pages.map((page, key) => (
-                    <div key={key}
-                    className={page === props.currentPage ? 'text-green-500' : 'text-red-500'}>
-                        <a onClick={() => props.onPageChange(page)} className={'text-2xl p-4 bg-secondary cursor-pointer'}>
-                            {page}
-                        </a>
-                    </div>
-                ))
-            }
+        <div className={"flex flex-row justify-between items-center"}>
+            <button
+                className={`btn btn-secondary pagination mr-auto ${props.currentPage === 1 ? 'disabled' : ''}`}
+                onClick={props.currentPage === 1 ? () => props.onPageChange(props.currentPage-1) : undefined   }>
+                Précédent
+            </button>
+            <div className={"flex flex-row gap-x-4 items-center"}>
+                {paginationButton}
+                {ellipsesLastPageDisplay}
+            </div>
+                <button
+                    className={`btn btn-secondary pagination ml-auto ${props.currentPage === pagesCount ? 'disabled' : ''}`}
+                    onClick={props.currentPage === pagesCount ? () => props.onPageChange(props.currentPage+1) : undefined}>
+                    Suivant
+                </button>
         </div>
     )
 }
