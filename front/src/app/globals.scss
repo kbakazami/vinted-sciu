@@ -18,6 +18,10 @@ h1, .title {
   }
 }
 
+.title-bold {
+  @apply font-bold uppercase;
+}
+
 h2 {
   @apply text-xl font-bold uppercase;
 
@@ -107,5 +111,16 @@ h2 {
 
   @screen lg {
     @apply h-auto w-1/2;
+  }
+}
+
+.account-dashboard {
+  a {
+    &:hover {
+      @apply text-secondary-darker;
+    }
+  }
+  .active {
+    @apply text-secondary-darker;
   }
 }
