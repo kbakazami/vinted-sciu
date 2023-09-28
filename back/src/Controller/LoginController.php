@@ -4,11 +4,13 @@ namespace App\Controller;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -34,10 +36,20 @@ class LoginController extends AbstractController
     }
 
     #[Route('/login', name: 'app_login', methods: ['POST'])]
-    public function login(Request $request): JsonResponse
+    public function login(#[CurrentUser] ?User $user, JWTTokenManagerInterface $JWTTokenManager): Response
     {
-        $user = $this->getUser();
-        return $this->json($user, 200, [], ['groups' => 'user:read']);
+      if (null === $user) {
+          return $this->json([
+              'message' => 'Missing credentials'
+          ], Response::HTTP_UNAUTHORIZED);
+      }
+
+      $token = $JWTTokenManager->create($user);
+
+      return $this->json([
+          'user' => $user->getUserIdentifier(),
+          'token' => $token
+      ]);
     }
 
     #[Route('/logout', name: 'app_logout')]

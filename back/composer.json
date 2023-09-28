@@ -8,6 +8,8 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/doctrine-migrations-bundle": "^3.2",
+        "lexik/jwt-authentication-bundle": "^2.18",
+        "nelmio/cors-bundle": "^2.3",
         "sonata-project/admin-bundle": "^4.26",
         "sonata-project/doctrine-orm-admin-bundle": "^4.13",
         "symfony/console": "6.3.*",
