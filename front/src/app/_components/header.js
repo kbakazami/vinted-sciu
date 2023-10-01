@@ -28,7 +28,9 @@ export default function Header() {
             </Button>
 
             <div className={"flex flex-row items-center lg:min-w-[190px]"}>
-                <Image className={"w-auto h-24"} src={rucheCitoyenne} alt={"Logo la ruche citoyenne"}/>
+                <Link href={"/"} className={"w-[160px]"}>
+                    <Image className={"w-auto h-24"} src={rucheCitoyenne} alt={"Logo la ruche citoyenne"}/>
+                </Link>
                 <Image className={"hidden lg:block w-[160px]"} src={wellnessCenter} alt={"Logo Wellness Center"}/>
             </div>
             <div className={"lg:flex lg:flex-row nav-wrapper hidden lg:justify-between lg:w-full"}>
