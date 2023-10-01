@@ -1,3 +1,4 @@
+'use client';
 import Image from "next/image";
 import Button from "@/app/_components/button";
 import {ChevronRight, Heart} from "@/app/_components/svg";
@@ -20,7 +21,7 @@ export default function Card(props) {
         <div className="relative">
             <Image src={props.src} alt={props.alt} className="w-full"/>
             {
-                isProduct && <Button className="btn-round btn-secondary absolute right-2.5 top-2.5" onClick={addToWishlist}>
+                isProduct && !props.isUserProduct && <Button className="btn-round btn-secondary absolute right-2.5 top-2.5" onClick={addToWishlist}>
                     <Heart className="text-primary"/>
                 </Button>
             }

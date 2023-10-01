@@ -35,7 +35,9 @@ module.exports = {
         poppins: ['var(--font-poppins)'],
       },
       spacing: {
-        '15':'60px'
+        '15':'60px',
+        '3/10':'30%',
+        '7/10':'70%'
       }
     },
   },
