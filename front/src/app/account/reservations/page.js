@@ -1,7 +1,10 @@
+import ReservationsUser from "@/app/_components/user/Reservations";
+
 export default function Reservations() {
     return (
-        <div>
-            réservations
-        </div>
+        <>
+            <h1 className={"title-bold mt-5"}>Mes réservations</h1>
+            <ReservationsUser/>
+        </>
     )
 }

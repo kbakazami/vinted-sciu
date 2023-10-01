@@ -1,16 +1,29 @@
 "use client";
 import Link from "next/link";
 import {usePathname} from "next/navigation";
+import {ChevronDown, ChevronRight, List} from "@/app/_components/svg";
+import Button from "@/app/_components/button";
 
 export default function AccountLayout({children}) {
     const pathname = usePathname();
 
+    function displayAccount() {
+        const accountNav = document.querySelector(".account-dashboard ul");
+        const accountTitle = document.querySelector(".account-dashboard p");
+        accountNav.classList.toggle('hidden');
+        accountNav.classList.toggle('flex');
+        accountTitle.classList.toggle('open');
+    }
+
     return (
         <>
             <div className={"bg-secondary account-dashboard"}>
-                <nav className={"max-w-screen-2xl mx-auto  flex flex-row py-6"}>
-                    <p className={"text-secondary-darker border-r-2 border-secondary-darker pr-5 mr-5"}>Mon profil</p>
-                    <ul className={"flex flex-row gap-x-5"}>
+                <nav className={"custom-container mx-auto flex flex-col lg:flex-row py-6"}>
+                    <p className={"text-secondary-darker lg:border-r-2 border-secondary-darker lg:pr-5 lg:mr-5 flex flex-row justify-between items-center"} onClick={displayAccount}>
+                        Mon profil
+                        <ChevronDown className="text-secondary-darker w-3 h-3 lg:hidden"/>
+                    </p>
+                    <ul className={"hidden lg:flex flex-col lg:flex-row gap-3 lg:gap-5"}>
                         <li>
                             <Link
                                 className={`${pathname === '/account' ? 'active' : ''}`}
@@ -39,10 +52,17 @@ export default function AccountLayout({children}) {
                                 Mes réservations
                             </Link>
                         </li>
+                        <li>
+                            <Link
+                                className={`${pathname === '/account/services' ? 'active' : ''}`}
+                                href={"/account/services"}>
+                                Mes services
+                            </Link>
+                        </li>
                     </ul>
                 </nav>
             </div>
-            <div className={"max-w-screen-2xl mx-auto"}>
+            <div className={"custom-container"}>
                 {children}
             </div>
         </>

@@ -1,12 +1,10 @@
+import Informations from "@/app/_components/user/Informations";
+
 export default function Account() {
     return (
         <div>
-            <h1 className={"title-bold mt-15"}>Mes informations</h1>
-            <div className={"bg-secondary"}>
-                <form>
-
-                </form>
-            </div>
+            <h1 className={"title-bold mt-5"}>Mes informations</h1>
+            <Informations/>
         </div>
     )
 }

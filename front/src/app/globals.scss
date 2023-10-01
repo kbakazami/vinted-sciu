@@ -31,15 +31,11 @@ h2 {
 }
 
 .custom-container {
-    @apply px-4;
+  @apply px-4 max-w-screen-xl mx-auto;
+}
 
-  @screen lg {
-    @apply px-8;
-  }
-
-  @screen 2xl {
-    @apply px-32;
-  }
+.container {
+  @apply px-4;
 }
 
 .btn {
@@ -92,6 +88,7 @@ h2 {
   @screen lg {
     @apply grid-cols-4;
   }
+
 }
 
 .grid-services-wrapper {
@@ -120,7 +117,16 @@ h2 {
       @apply text-secondary-darker;
     }
   }
+
   .active {
     @apply text-secondary-darker;
   }
+
+  .open {
+    @apply border-b pb-3 mb-3;
+  }
+}
+
+.error-page {
+  @apply flex flex-col justify-center text-center mt-20;
 }
