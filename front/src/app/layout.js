@@ -1,5 +1,6 @@
 import './globals.scss';
-import localFont from 'next/font/local'
+import localFont from 'next/font/local';
+import Header from "@/app/_components/header";
 
 const poppins = localFont({
   src: [
@@ -26,7 +27,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Header/>
+        {children}
+      </body>
     </html>
   )
 }
