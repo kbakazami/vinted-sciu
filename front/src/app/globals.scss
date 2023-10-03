@@ -49,6 +49,10 @@ h2 {
     @apply bg-secondary;
   }
 
+  &.btn-secondary-darker {
+    @apply bg-secondary-darker;
+  }
+
   &.btn-round {
     @apply w-12 h-12 rounded-full p-0 justify-center;
   }
@@ -150,4 +154,15 @@ h2 {
 
 .error-page {
   @apply flex flex-col justify-center text-center mt-20;
+}
+
+.input-form {
+  @apply w-3/5 p-2;
+}
+
+.message {
+  @apply bg-white border border-secondary-darker w-fit mx-auto flex flex-col text-center p-2 mt-4;
+  &.warning {
+
+  }
 }

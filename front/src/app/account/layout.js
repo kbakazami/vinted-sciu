@@ -2,7 +2,7 @@
 import Link from "next/link";
 import {usePathname} from "next/navigation";
 import {ChevronDown, ChevronRight, List} from "@/app/_components/svg";
-import Button from "@/app/_components/button";
+import Logout from "@/app/_components/user/Logout";
 
 export default function AccountLayout({children}) {
     const pathname = usePathname();
@@ -60,6 +60,7 @@ export default function AccountLayout({children}) {
                             </Link>
                         </li>
                     </ul>
+                    <Logout/>
                 </nav>
             </div>
             <div className={"custom-container"}>
