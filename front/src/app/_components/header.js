@@ -5,9 +5,9 @@ import Image from "next/image";
 import Link from "next/link";
 import Button from "@/app/_components/button";
 import {Heart, Menu, Search, User} from "@/app/_components/svg";
+import UserAuthenticated from "@/app/_components/navigation/user-authenticated";
 
 export default function Header() {
-
     const displayUserMenu = () => {
         document.querySelector('.menu-wrapper').classList.toggle('hidden');
     }
@@ -58,9 +58,7 @@ export default function Header() {
                         <Button href={""} onClick={displayUserMenu} content="" className="btn-round btn-secondary nav">
                             <Menu className="text-secondary-darker"/>
                         </Button>
-                        <div className="bg-secondary menu-wrapper hidden absolute right-0 -bottom-12">
-                            <Button href={"#"} content="Connexion" className="menu"/>
-                        </div>
+                        <UserAuthenticated/>
                     </li>
                 </ul>
             </div>
