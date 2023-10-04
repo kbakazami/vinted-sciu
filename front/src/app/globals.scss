@@ -35,7 +35,7 @@ h2 {
 }
 
 .btn {
-  @apply w-fit flex items-center gap-x-2.5 px-5 py-2 font-bold text-base uppercase text-white bg-gray-500 mx-auto;
+  @apply w-fit flex items-center gap-x-2.5 px-5 py-2 font-bold text-base uppercase text-white bg-gray-500 mx-auto text-sm;
 
   @screen lg {
     @apply text-xl;
@@ -83,6 +83,30 @@ h2 {
     &.active {
       @apply text-primary;
     }
+  }
+
+  &.small {
+    @apply text-xs;
+  }
+
+  &.product {
+    @apply w-full m-0 justify-center;
+
+    @screen lg {
+      @apply text-sm;
+    }
+
+    @screen xl {
+      @apply text-base;
+    }
+
+    &.full {
+      @apply w-full;
+    }
+  }
+
+  &.margin-less {
+    @apply m-0;
   }
 }
 
@@ -164,5 +188,20 @@ h2 {
   @apply bg-white border border-secondary-darker w-fit mx-auto flex flex-col text-center p-2 mt-4;
   &.warning {
 
+  }
+}
+
+.product-pictures-slider {
+  .keen-slider.thumbnail:not([data-keen-slider-disabled]) {
+    width: 120px;
+    @apply hidden;
+
+    @screen lg {
+      @apply flex;
+    }
+  }
+
+  .thumbnail .keen-slider__slide.active {
+    @apply border-2 border-secondary-darker;
   }
 }
