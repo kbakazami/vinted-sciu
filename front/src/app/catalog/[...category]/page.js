@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import Pagination from "@/app/_components/pagination";
 import {paginate} from "@/app/_helpers/paginate";
 import axios from "axios";
+import Link from "next/link";
 
 export default function Category ({ params }) {
 
@@ -64,7 +65,11 @@ export default function Category ({ params }) {
             <h1 className={"uppercase font-bold mt-5"}>{params.category}</h1>
             <div className={"grid-product-categories-wrapper"}>
                 {paginatedProducts.map((item) => {
-                    return <Card key={item.id} src={ProductPull} isProduct={true}/>
+                    return <>
+                        <Link key={item.id} href={`/catalog/products/${item.id}`}>
+                            <Card src={ProductPull} isProduct={true}/>
+                        </Link>
+                    </>
                 })}
             </div>
             <Pagination
