@@ -1,0 +1,153 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply text-primary font-poppins text-sm;
+
+  @screen sm {
+    @apply text-base;
+  }
+}
+
+h1, .title {
+  @apply text-2xl;
+
+  @screen lg {
+    @apply text-4xl;
+  }
+}
+
+.title-bold {
+  @apply font-bold uppercase;
+}
+
+h2 {
+  @apply text-xl font-bold uppercase;
+
+  @screen lg {
+    @apply text-3xl;
+  }
+}
+
+.custom-container {
+  @apply px-4 max-w-screen-xl mx-auto;
+}
+
+.btn {
+  @apply w-fit flex items-center gap-x-2.5 px-5 py-2 font-bold text-base uppercase text-white bg-gray-500 mx-auto;
+
+  @screen lg {
+    @apply text-xl;
+  }
+
+  &.btn-primary {
+    @apply bg-secondary-darker;
+  }
+
+  &.btn-secondary {
+    @apply bg-secondary;
+  }
+
+  &.btn-round {
+    @apply w-12 h-12 rounded-full p-0 justify-center;
+  }
+
+  &.card {
+    @apply m-0 w-8 h-8;
+  }
+
+  &.nav {
+    @apply w-10 h-10 m-0;
+  }
+
+  &.menu {
+    @apply text-base bg-secondary normal-case font-normal text-primary px-7;
+  }
+
+  &.pagination {
+    @apply text-primary text-base normal-case font-normal m-0 py-3;
+
+    &.disabled {
+      @apply text-secondary bg-secondary/50;
+    }
+  }
+
+  &.square {
+    @apply text-xl px-4 py-3 bg-secondary cursor-pointer font-normal text-secondary-darker;
+
+    &.active {
+      @apply text-primary;
+    }
+  }
+}
+
+.grid-product-categories-wrapper {
+  @apply grid grid-cols-1 gap-y-5 mt-5 mb-12;
+
+  @screen sm {
+    @apply grid grid-cols-2 gap-x-5;
+  }
+
+  @screen lg {
+    @apply grid-cols-4;
+  }
+
+}
+
+.grid-services-wrapper {
+  @apply grid grid-cols-1 gap-y-5 mt-5 mb-12;
+
+  @screen sm {
+    @apply grid grid-cols-2 gap-x-5;
+  }
+
+  @screen lg {
+    @apply grid-cols-3;
+  }
+}
+
+.homepage-picture {
+  @apply h-80 w-full object-cover;
+
+  @screen lg {
+    @apply h-auto w-1/2;
+  }
+}
+
+.nav-wrapper {
+  .mobile-link {
+
+    &.open {
+      @apply p-4 border-b border-secondary-darker;
+    }
+
+    .mobile-open {
+      @apply w-auto bg-transparent m-0 p-0 text-primary font-normal normal-case;
+    }
+  }
+
+  &.open {
+    @apply absolute inset-x-0 top-20 bottom-0 bg-white pb-8;
+  }
+}
+
+.account-dashboard {
+  a {
+    &:hover {
+      @apply text-secondary-darker;
+    }
+  }
+
+  .active {
+    @apply text-secondary-darker;
+  }
+
+  .open {
+    @apply border-b pb-3 mb-3;
+  }
+}
+
+.error-page {
+  @apply flex flex-col justify-center text-center mt-20;
+}

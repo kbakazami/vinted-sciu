@@ -1,7 +1,23 @@
-import './globals.css'
-import { Inter } from 'next/font/google'
+import './globals.scss';
+import localFont from 'next/font/local';
+import Header from "@/app/_components/header";
 
-const inter = Inter({ subsets: ['latin'] })
+const poppins = localFont({
+  src: [
+    {
+      path: './Poppins-Bold.ttf',
+      weight: '700',
+      style: 'normal',
+      variable: '--font-poppins',
+    },
+    {
+      path: './Poppins-Regular.ttf',
+      weight: '400',
+      style: 'italic',
+      variable: '--font-poppins',
+    },
+  ],
+})
 
 export const metadata = {
   title: 'Create Next App',
@@ -11,7 +27,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body>
+        <Header/>
+        {children}
+      </body>
     </html>
   )
 }

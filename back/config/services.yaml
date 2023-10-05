@@ -22,3 +22,34 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    admin.items:
+        class: App\Admin\ItemsAdmin
+        arguments: [~, App\Entity\Items, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Article }
+
+    admin.categories:
+        class: App\Admin\CategoriesAdmin
+        arguments: [~, App\Entity\Categories, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Catégorie }
+
+    admin.mutualHelp:
+        class: App\Admin\MutualHelpAdmin
+        arguments: [ ~, App\Entity\MutualHelp, ~ ]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Aide Mutuelle }
+
+    admin.mutualAttributes:
+        class: App\Admin\MutualAttributesAdmin
+        arguments: [ ~, App\Entity\MutualAttributes, ~ ]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Catégorie d'aide mutuelle }
+
+    admin.user:
+        class: App\Admin\UserAdmin
+        arguments: [ ~, App\Entity\User, ~ ]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Utilisateur }
+
