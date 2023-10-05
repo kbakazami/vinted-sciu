@@ -35,7 +35,7 @@ h2 {
 }
 
 .btn {
-  @apply w-fit flex items-center gap-x-2.5 px-5 py-2 font-bold text-base uppercase text-white bg-gray-500 mx-auto text-sm;
+  @apply flex items-center gap-x-2.5 px-5 py-2 font-bold text-center justify-center uppercase text-white bg-gray-500 mx-auto text-sm;
 
   @screen lg {
     @apply text-xl;

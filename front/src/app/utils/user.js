@@ -43,7 +43,7 @@ export async function getUserReservations() {
 
 export async function getUserServices() {
     try {
-        const response = await axios.get(`https://jsonplaceholder.typicode.com/todos`);
+        const response = await axios.get(`https://dummyjson.com/posts/`);
         return response.data;
     } catch (e)
     {

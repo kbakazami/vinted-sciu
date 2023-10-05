@@ -70,7 +70,7 @@ export default function ProductPicturesSlider({pictures, name}) {
 
                 {pictures.map((picture, key) => {
                     return <div key={key} className={"keen-slider__slide"}>
-                        <Image src={picture} alt={name} width={500} height={620} className={"w-full h-full object-cover cursor-grab"}/>
+                        <Image src={picture} alt={name} width={1000} height={1240} className={"w-full h-full object-cover cursor-grab"}/>
                     </div>
                 })}
 
@@ -96,7 +96,7 @@ export default function ProductPicturesSlider({pictures, name}) {
             <div ref={thumbnailRef} className="keen-slider thumbnail">
                 {pictures.map((picture, key) => {
                     return <div key={key} className={"keen-slider__slide"}>
-                        <Image src={picture} alt={name} width={120} height={120} className={"w-[120px] h-[120px] object-cover border border-secondary cursor-pointer"}/>
+                        <Image src={picture} alt={name} width={480} height={480} className={"w-[120px] h-[120px] object-cover border border-secondary cursor-pointer"}/>
                     </div>
                 })}
             </div>

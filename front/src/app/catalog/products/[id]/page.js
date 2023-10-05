@@ -52,7 +52,7 @@ const ProductsPage = async ({ params }) => {
                 </Button>
 
                 <div className={"flex flex-row gap-x-1.5 mt-10 lg:mt-auto"}>
-                    <Image src={user.image} alt={user.firstname} height={90} width={90} loading={"lazy"} className={"object-cover w-22 h-22 border border-red-500"}/>
+                    <Image src={user.image} alt={user.firstname} height={180} width={180} loading={"lazy"} className={"object-cover w-22 h-22 rounded-full"}/>
                     <div className={"flex flex-col justify-between"}>
                         <p className={"font-bold"}>{user.firstName} {user.lastName}</p>
                         <p>{user.company.address.address}</p>
