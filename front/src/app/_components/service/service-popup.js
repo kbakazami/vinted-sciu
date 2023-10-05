@@ -2,7 +2,6 @@ import {getServiceById} from "@/app/utils/services";
 import {useEffect} from "react";
 import Image from "next/image";
 import pfp from '../../annonces.jpg';
-import UserCard from "@/app/_components/user/user-card";
 import {Bubble} from "@/app/_components/svg";
 import Button from "@/app/_components/button";
 
