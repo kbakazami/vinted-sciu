@@ -24,9 +24,9 @@ export default function RegisterForm() {
 
     const onSubmit = async (data) => {
         const response = await customRegister(data.first_name, data.last_name, data.email, data.password);
-        // if(response) {
-        //     await signIn("credentials", {email: data.email, password: data.password, callbackUrl: '/account'});
-        // }
+        if(response) {
+            await signIn("credentials", {email: data.email, password: data.password, callbackUrl: '/account'});
+        }
     };
 
     return (
