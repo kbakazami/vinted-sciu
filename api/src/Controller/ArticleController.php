@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Article;
 use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,7 +36,7 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/api/articles', name: 'createArticle', methods: ['POST'])]
-    public function createArticle(Request $request, SerializerInterface $serializer, EntityManagerInterface $em, UrlGeneratorInterface $urlGenerator, CategoryRepository $categoryRepository, ValidatorInterface $validator): JsonResponse
+    public function createArticle(Request $request, SerializerInterface $serializer, EntityManagerInterface $em, UrlGeneratorInterface $urlGenerator, CategoryRepository $categoryRepository, ValidatorInterface $validator, UserRepository $userRepository): JsonResponse
     {
        $article = $serializer->deserialize($request->getContent(), Article::class, 'json');
 
@@ -45,12 +46,15 @@ class ArticleController extends AbstractController
            return new JsonResponse($serializer->serialize($errors, 'json'), 400, [], true);
        }
 
-
+       $article->setIsActive(false);
        $content = $request->toArray();
 
        $idCategory = $content['idCategory'] ?? -1;
+       $idUser = $content['idUser'] ?? -1;
+
 
        $article->setCategory($categoryRepository->find($idCategory));
+       $article->setUser($userRepository->find($idUser));
 
 
        $em->persist($article);

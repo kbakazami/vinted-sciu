@@ -75,7 +75,7 @@ class CategoryController extends AbstractController
         $em->remove($currentCategory);
         $em->flush();
 
-        return new JsonResponse(null, 204);
+        return new JsonResponse('Category deleted', 200, []);
     }
 
 }
