@@ -4,12 +4,17 @@ import wellnessCenter from './logos/Logo_Wellness_Center.png';
 import Image from "next/image";
 import Link from "next/link";
 import Button from "@/app/_components/button";
-import {Heart, Menu, Search, User} from "@/app/_components/svg";
+import {Heart, Menu, Plus, Search, User} from "@/app/_components/svg";
 import UserAuthenticated from "@/app/_components/navigation/user-authenticated";
+import UserAddItems from "@/app/_components/navigation/user-add-items";
 
 export default function Header() {
     const displayUserMenu = () => {
         document.querySelector('.menu-wrapper').classList.toggle('hidden');
+    }
+
+    const displayAddItemMenu = () => {
+        document.querySelector('.menu-wrapper-add-items').classList.toggle('hidden');
     }
 
     const displayMenuMobile = () => {
@@ -49,15 +54,14 @@ export default function Header() {
                             <span className={"lg:hidden"}>Recherche</span>
                         </Button>
                     </li>
-                    <li className={"mobile-link"}>
-                        <Button href="/items/add/product" content="" className="mobile-open lg:btn-round lg:btn-secondary lg:nav">
-                            {/*<Search className="text-primary"/>*/}
-                            <span>+</span>
-                            <span className={"lg:hidden"}>Ajouter un produit</span>
+                    <li className={"relative mobile-link"}>
+                        <Button href="" onClick={displayAddItemMenu} content="" className="mobile-open lg:btn-round lg:btn-secondary lg:nav">
+                            <Plus className="text-primary"/>
+                            <UserAddItems/>
                         </Button>
                     </li>
                     <li className={"mobile-link border-none"}>
-                        <Button href="#" content="" className="mobile-open lg:btn-round lg:btn-secondary lg:nav">
+                        <Button href="/account/wishlist" content="" className="mobile-open lg:btn-round lg:btn-secondary lg:nav">
                             <Heart className="text-primary"/>
                             <span className={"lg:hidden"}>Liste de souhait</span>
                         </Button>

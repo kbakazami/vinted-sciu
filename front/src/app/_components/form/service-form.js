@@ -2,13 +2,13 @@
 import * as React from "react";
 import { useForm } from 'react-hook-form';
 import {useEffect, useState} from "react";
-import {getCategories} from "@/app/utils/categories";
-import {addProduct, updateProduct} from "@/app/utils/products";
 import {useRouter} from "next/navigation";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {getServicesCategories} from "@/app/utils/service-categories";
+import {addService, updateService} from "@/app/utils/services";
 
-export default function ProductForm(params) {
+export default function ServiceForm(params) {
 
     const { register, handleSubmit,setValue, formState: { errors } } = useForm();
 
@@ -40,45 +40,45 @@ export default function ProductForm(params) {
 
     const redirectToAccount = () => {
         setTimeout(() => {
-            router.push("/account/products");
+            router.push("/account/services");
         }, 5000);
     }
 
-    const [categories, setCategories] = useState([]);
+    const [servicesCategories, setServicesCategories] = useState([]);
 
     const router = useRouter();
 
-    const getListCategories = async () => {
-        const response = await getCategories();
-        setCategories(response);
+    const getListServicesCategories = async () => {
+        const response = await getServicesCategories();
+        setServicesCategories(response);
     }
 
     useEffect(() => {
-        getListCategories();
+        getListServicesCategories();
     }, []);
 
     const onSubmit = async (data) => {
-        return params.product
-            ? editProduct(data)
-            : createProduct(data);
+        return params.service
+            ? editService(data)
+            : createService(data);
     }
 
-    const createProduct = async (data) => {
-        const response = await addProduct(data.title, data.description, data.category, 1);
+    const createService = async (data) => {
+        const response = await addService(data.title, data.description, data.serviceCategory, 1);
         if(response && response.status === 201)
         {
-            showSuccessToast('Votre produit a bien été créé ! Vous serez redirigé dans un instant.');
+            showSuccessToast('Votre service a bien été créé ! Vous serez redirigé dans un instant.');
             redirectToAccount();
         } else {
             showErrorToast();
         }
     }
 
-    const editProduct = async (data) => {
-        const response = await updateProduct(data.title, data.description, data.category, 1, params.productId);
+    const editService = async (data) => {
+        const response = await updateService(data.title, data.description, data.serviceCategory, 1, params.serviceId);
         if(response && response.status === 204)
         {
-            showSuccessToast('Votre produit a bien été mis à jour ! Vous serez redirigé dans un instant.');
+            showSuccessToast('Votre service a bien été mis à jour ! Vous serez redirigé dans un instant.');
             redirectToAccount();
         } else {
             showErrorToast();
@@ -86,18 +86,18 @@ export default function ProductForm(params) {
     }
 
     useEffect(() => {
-        if(params.product) {
-            const fields = ['title','description','category'];
+        if(params.service) {
+            const fields = ['title','description','serviceCategory'];
             fields.forEach(field => {
-                if(field === 'category')
+                if(field === 'serviceCategory')
                 {
-                    setValue(field, params.product[field].id);
+                    setValue(field, params.service[field].id);
                 } else {
-                    setValue(field, params.product[field]);
+                    setValue(field, params.service[field]);
                 }
             });
         }
-    }, [params.product]);
+    }, [params.service]);
 
 
     return (
@@ -105,15 +105,15 @@ export default function ProductForm(params) {
             <form className={"form-wrapper mt-5"} onSubmit={handleSubmit(onSubmit)}>
 
                 <h1 className={"title-bold my-2 lg:my-10"}>{params.titleForm}</h1>
-                <input className={"input-form"} type={"text"} placeholder={"Nom de l'article"} {...register("title", { required: true})}/>
-                {errors.product_name && <p className={"italic text-red-500 mb-4"}>Veuillez ajouter le nom de l'article</p>}
+                <input className={"input-form"} type={"text"} placeholder={"Nom du service"} {...register("title", { required: true})}/>
+                {errors.product_name && <p className={"italic text-red-500 mb-4"}>Veuillez ajouter le nom du service</p>}
 
-                <textarea className={"input-form"} rows={8} placeholder={"Description de l'article"} {...register("description", {required: true})}/>
+                <textarea rows={8} className={"input-form"} placeholder={"Description du service"} {...register("description", {required: true})}/>
                 {errors.description && <p className={"italic text-red-500 mb-4"}>Veuillez rentrer une description</p>}
 
-                <select className={"input-form"} defaultValue={""} {...register("category", {required: true})}>
+                <select className={"input-form"} defaultValue={""} {...register("serviceCategory", {required: true})}>
                     <option value={""} disabled>Catégorie</option>
-                    {categories.map((category, key) => {
+                    {servicesCategories.map((category, key) => {
                         return (
                             <option key={key} value={category.id}>{category.name}</option>
                         )

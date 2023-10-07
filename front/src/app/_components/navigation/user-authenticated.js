@@ -9,11 +9,11 @@ export default function UserAuthenticated(props) {
     const { status } = useSession();
 
     return (
-        <div className="bg-secondary menu-wrapper hidden absolute right-0 -bottom-12">
+        <div className="bg-secondary menu-wrapper hidden absolute right-0 shadow-xl">
             {status === "authenticated" &&
                 <>
                     <Button href={"/account"} content="Profil" className="menu"/>
-                    <Logout/>
+                    <Logout className={"btn btn-primary menu"}/>
                 </>
             }
             {status === "unauthenticated" &&

@@ -3,7 +3,7 @@ import ProductForm from "@/app/_components/form/product-form";
 export default function AddProduct() {
     return (
         <div className={"text-center px-4"}>
-            <ProductForm titleForm={"Ajouter un article"}/>
+            <ProductForm titleForm={"Ajouter un produit"}  submitText={"Créer le produit"}/>
         </div>
     )
 }

@@ -2,6 +2,7 @@
 
 import {useEffect, useState} from "react";
 import {getServiceById} from "@/app/utils/services";
+import ServiceForm from "@/app/_components/form/service-form";
 
 export default function EditService({params}) {
 
@@ -18,7 +19,7 @@ export default function EditService({params}) {
 
     return (
         <div className={"text-center px-4"}>
-        {/*    TODO: ADD SERVICE FORM WITH SERVICE AS A PARAM   */}
+            <ServiceForm titleForm={"Modifier un service"} submitText={"Enregistrer"} service={service} serviceId={params.id}/>
         </div>
     )
 }
