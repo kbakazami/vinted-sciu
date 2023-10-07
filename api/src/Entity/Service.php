@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ServiceRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ServiceRepository::class)]
 class Service
@@ -15,9 +16,11 @@ class Service
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['getServices'])]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups(['getServices'])]
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'services')]
@@ -25,6 +28,9 @@ class Service
 
     #[ORM\ManyToOne(inversedBy: 'services')]
     private ?User $user = null;
+
+    #[ORM\Column]
+    private ?bool $isActive = null;
 
     public function getId(): ?int
     {
@@ -75,6 +81,18 @@ class Service
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function isIsActive(): ?bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(bool $isActive): static
+    {
+        $this->isActive = $isActive;
 
         return $this;
     }
