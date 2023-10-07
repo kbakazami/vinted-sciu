@@ -21,7 +21,7 @@ export default function SignIn({ csrfToken }) {
 
     return (
         <>
-            <form className={"w-1/3 bg-secondary flex flex-col p-4 gap-4 items-center mx-auto mt-5"} onSubmit={handleSubmit(onSubmit)}>
+            <form className={"w-1/3 bg-secondary flex flex-col p-4 gap-4 items-center mx-auto mt-10 mb-20"} onSubmit={handleSubmit(onSubmit)}>
                 <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
                 <h1 className={"title-bold my-5"}>Connexion</h1>
                 <input className={"input-form"} type={"text"} placeholder={"example@myges.fr"} {...register("email", {required: true, pattern:/[a-z0-9]{2}(@myges\.fr)/})}/>
