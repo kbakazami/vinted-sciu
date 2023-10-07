@@ -5,7 +5,11 @@ export function middleware(request) {
         return withAuth(request);
     }
 
-    if(/.*(add-*)+.*/.test(request.nextUrl.pathname)) {
+    if(/.*(add)+.*/.test(request.nextUrl.pathname)) {
+        return withAuth(request);
+    }
+
+    if(/.*(edit)+.*/.test(request.nextUrl.pathname)) {
         return withAuth(request);
     }
 }

@@ -50,7 +50,7 @@ export default function Header() {
                         </Button>
                     </li>
                     <li className={"mobile-link"}>
-                        <Button href="/items/add-product" content="" className="mobile-open lg:btn-round lg:btn-secondary lg:nav">
+                        <Button href="/items/add/product" content="" className="mobile-open lg:btn-round lg:btn-secondary lg:nav">
                             {/*<Search className="text-primary"/>*/}
                             <span>+</span>
                             <span className={"lg:hidden"}>Ajouter un produit</span>
