@@ -2,7 +2,7 @@ import NextAuth from "next-auth/next";
 import axios from "axios";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-const API_URL = 'http://localhost:8000'
+const API_URL = 'http://localhost:8000/api'
 
 const handler = NextAuth({
     providers: [
@@ -18,7 +18,7 @@ const handler = NextAuth({
             },
             async authorize(credentials, request) {
                 try {
-                    const response = await axios.post(`${API_URL}/login`, JSON.stringify({
+                    const response = await axios.post(`${API_URL}/login_check`, JSON.stringify({
                         username: credentials?.email,
                         password: credentials?.password,
                     }), {
