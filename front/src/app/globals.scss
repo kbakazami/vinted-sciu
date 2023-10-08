@@ -8,6 +8,18 @@ body {
   @screen sm {
     @apply text-base;
   }
+
+  .toast-wrapper-custom {
+
+    @screen sm {
+      width: 500px;
+      @apply top-16;
+    }
+
+    @screen lg {
+      width: 600px;
+    }
+  }
 }
 
 h1, .title {
@@ -160,7 +172,7 @@ h4 {
   }
 
   &.open {
-    @apply absolute inset-x-0 top-20 bottom-0 bg-white pb-8;
+    @apply absolute inset-x-0 top-20 bottom-0 bg-white pb-8 overflow-auto;
   }
 }
 
@@ -185,7 +197,11 @@ h4 {
 }
 
 .input-form {
-  @apply w-3/5 p-2;
+  @apply w-full p-2;
+
+  @screen lg {
+    @apply w-4/5;
+  }
 }
 
 .message {
@@ -239,3 +255,16 @@ footer {
   @apply flex flex-col justify-between;
   min-height: 100vh;
 }
+
+.form-wrapper {
+  @apply w-full bg-secondary flex flex-col p-4 gap-4 items-center mx-auto;
+
+  @screen lg {
+    @apply w-1/2;
+  }
+
+  @screen 2xl {
+    @apply w-1/3;
+  }
+}
+

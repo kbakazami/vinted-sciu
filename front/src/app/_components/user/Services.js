@@ -8,7 +8,7 @@ const UserServices = async () => {
 
     return (
         <div className={"grid-services-wrapper"}>
-            {services.map((service) => {
+            {services.posts.map((service) => {
                 return <Services key={service.id} src={pfp} username={service.id} title={service.title} description={service.body}/>
             })}
         </div>
