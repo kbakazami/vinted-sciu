@@ -78,5 +78,6 @@ export default function Header() {
                 <User className="text-primary"/>
             </Button>
         </nav>
+        </header>
     )
 }
