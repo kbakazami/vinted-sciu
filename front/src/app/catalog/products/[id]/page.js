@@ -13,8 +13,13 @@ const ProductsPage = async ({ params }) => {
     console.log(user);
 
     return (
-        <div className={"max-w-screen-xl mx-auto flex flex-col lg:flex-row lg:gap-x-4 xl:gap-x-9 mt-10 lg:px-4"}>
-            <ProductPicturesSlider pictures={product.images} name={product.title}/>
+        <div className={"max-w-screen-xl mx-auto flex flex-col lg:flex-row lg:gap-x-4 xl:gap-x-9 my-10 lg:px-4"}>
+            {/*<ProductPicturesSlider pictures={product.images} name={product.title}/>*/}
+            <div className={"h-[450px] sm:h-[550px] md:h-[620px] lg:w-1/2 bg-gray-500 italic text-center text-2xl flex"}>
+                <span className={"m-auto"}>
+                    Placeholder pour le slider image
+                </span>
+            </div>
             <div className={"flex flex-col px-4 w-full lg:w-1/2 lg:px-0"}>
                 <h1 className={"text-center title-bold mt-5 lg:text-left lg:mt-0"}>{product.title}</h1>
                 <p className={"bg-secondary p-5 my-5"}>
@@ -52,7 +57,12 @@ const ProductsPage = async ({ params }) => {
                 </Button>
 
                 <div className={"flex flex-row gap-x-1.5 mt-10 lg:mt-auto"}>
-                    <Image src={user.image} alt={user.firstname} height={180} width={180} loading={"lazy"} className={"object-cover w-22 h-22 rounded-full"}/>
+                    {/*<Image src={user.image} alt={user.firstname} height={180} width={180} loading={"lazy"} className={"object-cover w-22 h-22 rounded-full"}/>*/}
+                    <div className={"w-22 h-22 rounded-full bg-gray-500 italic text-center flex"}>
+                        <span className={"m-auto"}>
+                            Placeholder pour l'image de l'élève
+                        </span>
+                    </div>
                     <div className={"flex flex-col justify-between"}>
                         <p className={"font-bold"}>{user.firstName} {user.lastName}</p>
                         <p>{user.company.address.address}</p>

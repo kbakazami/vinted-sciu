@@ -1,35 +1,18 @@
-'use client';
+import {useEffect, useState} from "react";
+import {paginate} from "@/app/_helpers/paginate";
+import Link from "next/link";
 import Card from "@/app/_components/card";
 import ProductPull from "@/app/product-pull.png";
-import {useEffect, useState} from "react";
 import Pagination from "@/app/_components/pagination";
-import {paginate} from "@/app/_helpers/paginate";
-import axios from "axios";
-import Link from "next/link";
 
-export default function Category ({ params }) {
-
-    const [products = [], setProducts] = useState();
-    let productsList = [];
-
-    useEffect( () => {
-        async function fetchBlogPosts() {
-            const response = await axios.get("https://jsonplaceholder.typicode.com/todos");
-            setProducts(response.data);
-        }
-        fetchBlogPosts();
-    }, []);
-
-    products.forEach(post => {
-        productsList.push(post);
-    });
+const ProductListing = ({productsList}) => {
 
     const [currentPage, setCurrentPage] = useState(1);
     const [maxPageLimit, setMaxPageLimit] = useState(3);
     const [minPageLimit, setMinPageLimit] = useState(1);
 
     const pageSize = 12;
-    const pagesCount = Math.ceil(products.length / pageSize);
+    const pagesCount = Math.ceil(productsList.length / pageSize);
 
     const onPageChange = (page) => {
         if (page >= maxPageLimit && (page + 4) === pagesCount)
@@ -61,15 +44,14 @@ export default function Category ({ params }) {
     const paginatedProducts = paginate(productsList, currentPage, pageSize);
 
     return (
-        <div className={"custom-container"}>
-            <h1 className={"uppercase font-bold mt-5"}>{params.category}</h1>
+        <>
             <div className={"grid-product-categories-wrapper"}>
                 {paginatedProducts.map((item) => {
-                    return <>
+                    return (
                         <Link key={item.id} href={`/catalog/products/${item.id}`}>
-                            <Card src={ProductPull} isProduct={true}/>
+                            <Card src={ProductPull} isProduct={true} title={item.title}/>
                         </Link>
-                    </>
+                    )
                 })}
             </div>
             <Pagination
@@ -79,6 +61,9 @@ export default function Category ({ params }) {
                 onPageChange={onPageChange}
                 maxPageLimit={maxPageLimit}
                 minPageLimit={minPageLimit}/>
-        </div>
+        </>
     )
+
 }
+
+export default ProductListing;
