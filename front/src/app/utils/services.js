@@ -4,8 +4,8 @@ const API_URL = "http://localhost:8000/api";
 
 export async function getServices() {
     try {
-        const response = await axios.get(`https://dummyjson.com/products`);
-        return response.data.products;
+        const response = await axios.get(`${API_URL}/services`);
+        return response.data;
     } catch (e)
     {
         console.log(e);
@@ -18,6 +18,15 @@ export async function getServiceById(serviceId) {
         return response.data;
     } catch (e)
     {
+        console.log(e);
+    }
+}
+
+export async function getServicesByCategory(serviceCategoryName){
+    try {
+        const response = await axios.get(`${API_URL}/servicesCategories/${serviceCategoryName}/services`);
+        return response.data.services;
+    } catch (e) {
         console.log(e);
     }
 }

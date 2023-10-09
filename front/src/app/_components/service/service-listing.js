@@ -1,37 +1,19 @@
-'use client';
 import {useEffect, useState} from "react";
-import PaginationCustom from "@/app/_components/pagination";
 import {paginate} from "@/app/_helpers/paginate";
-import Services from "@/app/_components/service/services";
 import Button from "@/app/_components/button";
 import {Bubble} from "@/app/_components/svg";
-import {getServices} from "@/app/utils/services";
+import Services from "@/app/_components/service/services";
 import ServicePopup from "@/app/_components/service/service-popup";
+import PaginationCustom from "@/app/_components/pagination";
 
-export default function Service ({ params }) {
-
-    const [services, setServices] = useState([]);
-    let servicesList = [];
-
-    useEffect(() => {
-        getServicesList();
-    }, []);
-
-    const getServicesList = async () => {
-        const servicesList = await getServices();
-        setServices(servicesList);
-    }
-
-    services.forEach(service => {
-        servicesList.push(service);
-    });
+const ServiceListing = ({servicesListing}) => {
 
     const [currentPage, setCurrentPage] = useState(1);
     const [maxPageLimit, setMaxPageLimit] = useState(3);
     const [minPageLimit, setMinPageLimit] = useState(1);
 
     const pageSize = 12;
-    const pagesCount = Math.ceil(services.length / pageSize);
+    const pagesCount = Math.ceil(servicesListing.length / pageSize);
 
     const onPageChange = (page) => {
         if (page >= maxPageLimit && (page + 4) === pagesCount)
@@ -60,7 +42,7 @@ export default function Service ({ params }) {
         setCurrentPage(page);
     }
 
-    const paginatedServices = paginate(servicesList, currentPage, pageSize);
+    const paginatedServices = paginate(servicesListing, currentPage, pageSize);
 
     const [isOpen, setIsOpen] = useState(false);
     const [selectedService, setSelectedService] = useState({});
@@ -77,7 +59,7 @@ export default function Service ({ params }) {
     useEffect(() => {
         if(isOpen) {
             body.classList.add('overflow-y-hidden');
-            overlay.classList.add('absolute','inset-0','bg-black/80');
+            overlay.classList.add('absolute','inset-0','bg-black/80','z-20');
             body.appendChild(overlay);
 
         } else {
@@ -85,11 +67,8 @@ export default function Service ({ params }) {
         }
     },[isOpen]);
 
-
-
     return (
-        <div className={"custom-container"}>
-            <h1 className={"uppercase font-bold mt-5"}>{params.cooperation}</h1>
+        <>
             <div>
                 <p className={"text-center"}>
                     Vous pouvez déposer vos demandes ici si vous ne trouvez pas votre bonheur parmis les objets déjà présents !<br/>
@@ -113,12 +92,14 @@ export default function Service ({ params }) {
                 })}
             </div>
             <PaginationCustom
-                items={servicesList.length}
+                items={servicesListing.length}
                 currentPage={currentPage}
                 pageSize={pageSize}
                 onPageChange={onPageChange}
                 maxPageLimit={maxPageLimit}
                 minPageLimit={minPageLimit}/>
-        </div>
+        </>
     )
 }
+
+export default ServiceListing;

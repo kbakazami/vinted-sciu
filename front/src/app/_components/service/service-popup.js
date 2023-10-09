@@ -9,9 +9,14 @@ function ServicePopup ({open, selectedService}) {
     return (
         <>
             {open &&
-                <div className={"absolute w-1/3 left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 bg-white z-10 p-5 flex flex-row gap-x-8 rounded-md"}>
+                <div className={"absolute w-1/3 left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 bg-white z-30 p-5 flex flex-row gap-x-8 rounded-md"}>
                     <div className={"flex flex-col"}>
-                        <Image src={pfp} alt={'Eleve'} className={"object-cover rounded-full w-32 h-32"} height={360} width={360}/>
+                        {/*<Image src={pfp} alt={'Eleve'} className={"object-cover rounded-full w-32 h-32"} height={360} width={360}/>*/}
+                        <div className={"w-32 h-32 rounded-full bg-gray-500 italic text-center flex"}>
+                        <span className={"m-auto"}>
+                            Placeholder pour l'image de l'élève
+                        </span>
+                        </div>
                             <p className={"font-bold mt-2"}>Nom Prénom</p>
                             <p>Étudiant(e) en M1 IW - ESGI</p>
                     </div>
