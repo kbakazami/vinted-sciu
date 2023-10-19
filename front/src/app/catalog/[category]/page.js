@@ -19,7 +19,7 @@ export default function Category ({params}) {
     return (
         <div className={"custom-container"}>
             <h1 className={"uppercase font-bold mt-5"}>{params.category}</h1>
-            <ProductListing productsList={products}/>
+            <ProductListing products={products}/>
         </div>
     )
 }

@@ -14,12 +14,12 @@ export default function Category () {
 
     useEffect(() => {
         getProductsList();
-    }, [])
+    }, []);
 
     return (
         <div className={"custom-container"}>
             <h1 className={"uppercase font-bold mt-5"}>Catalogue</h1>
-            <ProductListing productsList={products}/>
+            <ProductListing products={products}/>
         </div>
     )
 }
