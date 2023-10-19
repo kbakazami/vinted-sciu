@@ -1,15 +1,20 @@
 'use client';
-import rucheCitoyenne from './Logo_Ruche_Citoyenne.png';
-import wellnessCenter from './Logo_Wellness_Center.png';
+import rucheCitoyenne from './logos/Logo_Ruche_Citoyenne.png';
+import wellnessCenter from './logos/Logo_Wellness_Center.png';
 import Image from "next/image";
 import Link from "next/link";
 import Button from "@/app/_components/button";
-import {Heart, Menu, Search, User} from "@/app/_components/svg";
+import {Heart, Menu, Plus, Search, User} from "@/app/_components/svg";
 import UserAuthenticated from "@/app/_components/navigation/user-authenticated";
+import UserAddItems from "@/app/_components/navigation/user-add-items";
 
 export default function Header() {
     const displayUserMenu = () => {
         document.querySelector('.menu-wrapper').classList.toggle('hidden');
+    }
+
+    const displayAddItemMenu = () => {
+        document.querySelector('.menu-wrapper-add-items').classList.toggle('hidden');
     }
 
     const displayMenuMobile = () => {
@@ -22,10 +27,11 @@ export default function Header() {
     }
 
     return (
-        <nav className="flex flex-row w-full items-center h-20 custom-container justify-between">
-            <Button href={""} onClick={displayMenuMobile} content="" className="btn-round btn-secondary nav lg:hidden nav">
-                <Menu className="text-secondary-darker"/>
-            </Button>
+        <header>
+            <nav className="flex flex-row w-full items-center h-20 custom-container justify-between">
+                <Button href={""} onClick={displayMenuMobile} content="" className="btn-round btn-secondary nav lg:hidden nav">
+                    <Menu className="text-secondary-darker"/>
+                </Button>
 
             <div className={"flex flex-row items-center lg:min-w-[190px]"}>
                 <Link href={"/"} className={"w-[160px]"}>
@@ -33,7 +39,7 @@ export default function Header() {
                 </Link>
                 <Image className={"hidden lg:block w-[160px]"} src={wellnessCenter} alt={"Logo Wellness Center"}/>
             </div>
-            <div className={"lg:flex lg:flex-row nav-wrapper hidden lg:justify-between lg:w-full"}>
+            <div className={"lg:flex lg:flex-row nav-wrapper hidden lg:justify-between lg:w-full z-20"}>
                 <ul className={"flex flex-col lg:flex-row flex-wrap gap-x-4 xl:gap-x-8 lg:items-center text-base lg:mx-auto"}>
                     <li className={"mobile-link"}><Link href={"#"}>Mode</Link></li>
                     <li className={"mobile-link"}><Link href={"#"}>Maison</Link></li>
@@ -48,8 +54,14 @@ export default function Header() {
                             <span className={"lg:hidden"}>Recherche</span>
                         </Button>
                     </li>
+                    <li className={"relative mobile-link"}>
+                        <Button href="" onClick={displayAddItemMenu} content="" className="mobile-open lg:btn-round lg:btn-secondary lg:nav">
+                            <Plus className="text-primary"/>
+                            <UserAddItems/>
+                        </Button>
+                    </li>
                     <li className={"mobile-link border-none"}>
-                        <Button href="#" content="" className="mobile-open lg:btn-round lg:btn-secondary lg:nav">
+                        <Button href="/account/wishlist" content="" className="mobile-open lg:btn-round lg:btn-secondary lg:nav">
                             <Heart className="text-primary"/>
                             <span className={"lg:hidden"}>Liste de souhait</span>
                         </Button>
@@ -66,5 +78,6 @@ export default function Header() {
                 <User className="text-primary"/>
             </Button>
         </nav>
+        </header>
     )
 }

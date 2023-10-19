@@ -23,7 +23,7 @@ export default function RegisterForm() {
     },[status, router]);
 
     const onSubmit = async (data) => {
-        const response = await customRegister(data.email, data.password);
+        const response = await customRegister(data.first_name, data.last_name, data.email, data.password);
         if(response) {
             await signIn("credentials", {email: data.email, password: data.password, callbackUrl: '/account'});
         }
@@ -31,8 +31,14 @@ export default function RegisterForm() {
 
     return (
         <>
-            <form className={"w-1/3 bg-secondary flex flex-col p-4 gap-4 items-center mx-auto mt-5"} onSubmit={handleSubmit(onSubmit)}>
+            <form className={"form-wrapper mt-5"} onSubmit={handleSubmit(onSubmit)}>
                 <h1 className={"title-bold my-5"}>Inscription</h1>
+
+                <input className={"input-form"} type={"first_name"} placeholder={"Prénom"} {...register("first_name", {required: true})} />
+                {errors.password && <p className={"italic text-red-500 mb-4"}>Veuillez rentrer un prénom</p>}
+
+                <input className={"input-form"} type={"last_name"} placeholder={"Nom"} {...register("last_name", {required: true})} />
+                {errors.password && <p className={"italic text-red-500 mb-4"}>Veuillez rentrer un nom</p>}
 
                 <input className={"input-form"} type={"text"} placeholder={"example@myges.fr"} {...register("email", { required: true, pattern:/[a-z0-9]{2}(@myges\.fr)/})}/>
                 {errors.email && <p className={"italic text-red-500 mb-4"}>L'email ne correspond pas. Veuillez utiliser l'email que l'école vous as fournie</p>}

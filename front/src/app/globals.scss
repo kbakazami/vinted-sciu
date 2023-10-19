@@ -8,6 +8,18 @@ body {
   @screen sm {
     @apply text-base;
   }
+
+  .toast-wrapper-custom {
+
+    @screen sm {
+      width: 500px;
+      @apply top-16;
+    }
+
+    @screen lg {
+      width: 600px;
+    }
+  }
 }
 
 h1, .title {
@@ -28,6 +40,10 @@ h2 {
   @screen lg {
     @apply text-3xl;
   }
+}
+
+h4 {
+  @apply text-xl font-bold uppercase;
 }
 
 .custom-container {
@@ -156,7 +172,7 @@ h2 {
   }
 
   &.open {
-    @apply absolute inset-x-0 top-20 bottom-0 bg-white pb-8;
+    @apply absolute inset-x-0 top-20 bottom-0 bg-white pb-8 overflow-auto;
   }
 }
 
@@ -181,7 +197,11 @@ h2 {
 }
 
 .input-form {
-  @apply w-3/5 p-2;
+  @apply w-full p-2;
+
+  @screen lg {
+    @apply w-4/5;
+  }
 }
 
 .message {
@@ -205,3 +225,46 @@ h2 {
     @apply border-2 border-secondary-darker;
   }
 }
+
+footer {
+  a {
+    @apply ease-in-out duration-300;
+  }
+  a:hover {
+    @apply text-secondary-darker;
+  }
+}
+
+.social-link-footer {
+  @apply w-10 h-10 border border-secondary-darker rounded-full flex;
+
+  .social-icon {
+    @apply text-primary m-auto ease-in-out duration-300;
+
+    &:hover {
+      @apply text-secondary-darker;
+    }
+  }
+}
+
+.section-footer {
+  @apply border-b-2 lg:border-b-0 lg:border-r-2 border-secondary-darker flex flex-col p-5 lg:px-10 lg:w-3/12;
+}
+
+.page-wrapper {
+  @apply flex flex-col justify-between;
+  min-height: 100vh;
+}
+
+.form-wrapper {
+  @apply w-full bg-secondary flex flex-col p-4 gap-4 items-center mx-auto;
+
+  @screen lg {
+    @apply w-1/2;
+  }
+
+  @screen 2xl {
+    @apply w-1/3;
+  }
+}
+
