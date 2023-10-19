@@ -37,6 +37,7 @@ class Article
     private ?User $user = null;
 
     #[ORM\Column]
+    #[Groups(['getArticles'])]
     private ?bool $isActive = null;
 
     public function getId(): ?int

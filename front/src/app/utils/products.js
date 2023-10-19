@@ -1,8 +1,12 @@
 import axios from "axios";
+import "server-only";
+
 
 const API_URL = "http://localhost:8000/api";
 
+
 export async function getProductById(id) {
+
     try {
         const response = await axios.get(`${API_URL}/articles/${id}`);
         return response.data;
@@ -39,4 +43,8 @@ export async function updateProduct(productName, description, categoryId, userId
     } catch (e) {
         console.log(e);
     }
+}
+
+export async function GET(param) {
+    return await axios.get(`${API_URL}${param}`);
 }
