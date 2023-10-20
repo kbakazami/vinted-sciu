@@ -4,6 +4,23 @@ import "server-only";
 
 const API_URL = "http://localhost:8000/api";
 
+export async function getProducts() {
+    try {
+        const response = await axios.get(`${API_URL}/articles`);
+        return response.data;
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+export async function getProductsByCategory(categoryName) {
+    try {
+        const response = await axios.get(`${API_URL}/categories/${categoryName}/articles`);
+        return response.data.articles;
+    } catch (e) {
+        console.log(e);
+    }
+}
 
 export async function getProductById(id) {
 
