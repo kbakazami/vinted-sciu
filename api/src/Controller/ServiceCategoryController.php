@@ -30,7 +30,7 @@ class ServiceCategoryController extends AbstractController
         return new JsonResponse($jsonServiceCategory, 200, ['accept' => 'json'], true);
     }
 
-    #[Route('/api/servicesCategories/{id}/services', name: 'ServiceCategoryByService', methods: ['GET'])]
+    #[Route('/api/servicesCategories/{id}/', name: 'ServiceCategoryByService', methods: ['GET'])]
     public function getServicesByServiceCategory(ServiceCategoryRepository $serviceCategoryRepository, SerializerInterface $serializer, int $id): JsonResponse
     {
         $serviceCategory = $serviceCategoryRepository->find($id);

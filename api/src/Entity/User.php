@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -15,12 +16,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['getArticles', 'getArticlesByUser', 'getUsers', 'getServicesByUser'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Groups(['getUsers'])]
     private ?string $email = null;
 
     #[ORM\Column]
+    #[Groups(['getUsers'])]
     private array $roles = [];
 
     /**
@@ -30,25 +34,39 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['getUsers'])]
     private ?string $lastName = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['getUsers'])]
     private ?string $firstName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $picture = null;
 
     #[ORM\Column]
+    #[Groups(['getUsers'])]
     private ?bool $isFirstActive = null;
 
     #[ORM\Column]
+    #[Groups(['getUsers'])]
     private ?bool $isActive = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Article::class)]
+    #[Groups(['getArticlesByUser'])]
     private Collection $articles;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Service::class)]
+    #[Groups(['getServicesByUser'])]
     private Collection $services;
+
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    #[Groups(['getUsers'])]
+    private ?Ecole $ecole = null;
+
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    #[Groups(['getUsers'])]
+    private ?Promo $promo = null;
 
     public function __construct()
     {
@@ -242,6 +260,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $service->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEcole(): ?Ecole
+    {
+        return $this->ecole;
+    }
+
+    public function setEcole(?Ecole $ecole): static
+    {
+        $this->ecole = $ecole;
+
+        return $this;
+    }
+
+    public function getPromo(): ?Promo
+    {
+        return $this->promo;
+    }
+
+    public function setPromo(?Promo $promo): static
+    {
+        $this->promo = $promo;
 
         return $this;
     }

@@ -14,11 +14,11 @@ class Article
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['getArticles', 'getCategories'])]
+    #[Groups(['getArticles', 'getCategories', 'getArticlesByUser'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['getArticles', 'getCategories'])]
+    #[Groups(['getArticles', 'getCategories', 'getArticlesByUser'])]
     #[Assert\NotBlank(message: "Le titre du l'article est obligatoire")]
     #[Assert\Length(min: 3, max: 255, minMessage: "Le titre doit faire au moins {{ limit }} caractères", maxMessage: "Le titre doit faire au plus {{ limit }} caractères")]
     private ?string $title = null;
@@ -34,6 +34,7 @@ class Article
     private ?Category $category = null;
 
     #[ORM\ManyToOne(inversedBy: 'articles')]
+    #[Groups(['getArticles'])]
     private ?User $user = null;
 
     #[ORM\Column]
