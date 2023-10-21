@@ -24,7 +24,7 @@ export default function TableAdminServices() {
     }
 
     return (
-        <div className="max-w-7xl mx-auto my-10">
+        <div className="custom-container my-10">
             <Table dataSource={data} >
                 <Column title="Id" dataIndex="id" key="id" width={50}/>
                 <Column title="Nom" dataIndex="title" key="title" width={200} />
