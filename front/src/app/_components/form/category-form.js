@@ -1,14 +1,13 @@
 "use client";
 import * as React from "react";
 import { useForm } from 'react-hook-form';
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import {useRouter} from "next/navigation";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {addServiceCategory, getServicesCategories, updateServiceCategory} from "@/app/utils/service-categories";
-import {addService, updateService} from "@/app/utils/services";
+import {addCategory, updateCategory} from "@/app/utils/categories";
 
-export default function ServiceCategoryForm(params) {
+export default function CategoryForm(params) {
 
     const { register, handleSubmit,setValue, formState: { errors } } = useForm();
 
@@ -38,50 +37,50 @@ export default function ServiceCategoryForm(params) {
         });
     }
 
-    const redirectToAdminServiceCategory = () => {
+    const redirectToAdminCategory = () => {
         setTimeout(() => {
-            router.push("/admin/services-categories");
+            router.push("/admin/categories");
         }, 5000);
     }
 
     const router = useRouter();
 
     const onSubmit = async (data) => {
-        return params.serviceCategory
-            ? editServiceCategory(data)
-            : createServiceCategory(data);
+        return params.category
+            ? editCategory(data)
+            : createCategory(data);
     }
 
-    const createServiceCategory = async (data) => {
-        const response = await addServiceCategory(data.name);
+    const createCategory = async (data) => {
+        const response = await addCategory(data.name);
         if(response && response.status === 201)
         {
-            showSuccessToast('Votre catégorie pour les services a bien été créée ! Vous serez redirigé dans un instant.');
-            redirectToAdminServiceCategory();
+            showSuccessToast('Votre catégorie a bien été créée ! Vous serez redirigé dans un instant.');
+            redirectToAdminCategory();
         } else {
             showErrorToast();
         }
     }
 
-    const editServiceCategory = async (data) => {
-        const response = await updateServiceCategory(data.name, params.serviceCategoryId);
-        if(response && response.status === 200)
+    const editCategory = async (data) => {
+        const response = await updateCategory(data.name, params.categoryId);
+        if(response && response.status === 204)
         {
-            showSuccessToast('Votre catégorie pour les services a bien été mise à jour ! Vous serez redirigé dans un instant.');
-            redirectToAdminServiceCategory();
+            showSuccessToast('Votre catégorie a bien été mise à jour ! Vous serez redirigé dans un instant.');
+            redirectToAdminCategory();
         } else {
             showErrorToast();
         }
     }
 
     useEffect(() => {
-        if(params.serviceCategory) {
+        if(params.category) {
             const fields = ['name'];
             fields.forEach(field => {
-                setValue(field, params.serviceCategory[field]);
+                setValue(field, params.category[field]);
             });
         }
-    }, [params.serviceCategory]);
+    }, [params.category]);
 
 
     return (
@@ -89,8 +88,8 @@ export default function ServiceCategoryForm(params) {
             <form className={"form-wrapper mt-5"} onSubmit={handleSubmit(onSubmit)}>
 
                 <h1 className={"title-bold my-2 lg:my-10 text-center"}>{params.titleForm}</h1>
-                <input className={"input-form"} type={"text"} placeholder={"Nom de la catégorie pour les services"} {...register("name", { required: true})}/>
-                {errors.name && <p className={"italic text-red-500 mb-4"}>Veuillez ajouter le nom de la catégorie pour les services</p>}
+                <input className={"input-form"} type={"text"} placeholder={"Nom de la catégorie"} {...register("name", { required: true})}/>
+                {errors.name && <p className={"italic text-red-500 mb-4"}>Veuillez ajouter le nom de la catégorie</p>}
 
                 <input className={"btn btn-secondary-darker cursor-pointer my-2 lg:my-10"} type={"submit"} value={`${params.submitText}`}/>
             </form>

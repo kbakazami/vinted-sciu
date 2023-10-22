@@ -3,23 +3,23 @@ import {Space, Table} from "antd";
 import {useEffect, useState} from "react";
 import Link from "next/link";
 import {deleteServiceCategoryById, getServicesCategories} from "@/app/utils/service-categories";
-import Button from "@/app/_components/button";
+import {deleteCategoryById, getCategories} from "@/app/utils/categories";
 const { Column } = Table;
 
-export default function TableAdminServicesCategories() {
+export default function TableAdminCategories() {
     const [data, setData] = useState();
 
-    const getServicesCategoriesList = async () => {
-        const response = await getServicesCategories();
+    const getCategoriesList = async () => {
+        const response = await getCategories();
         setData(response);
     }
 
     useEffect(() => {
-        getServicesCategoriesList();
+        getCategoriesList();
     }, []);
 
-    const deleteServiceCategory = async (serviceId) => {
-        await deleteServiceCategoryById(serviceId);
+    const deleteCategory = async (serviceId) => {
+        await deleteCategoryById(serviceId);
         setData(data.filter(item => item.id !== serviceId));
     }
 
@@ -30,11 +30,11 @@ export default function TableAdminServicesCategories() {
                 <Column title="Nom" dataIndex="name" key="name"/>
                 <Column title="Action" key="action" width={100} render={(_, record) => (
                     <Space size="middle">
-                        <Link href={"/admin/services/services-categories/" + record.id}>
+                        <Link href={"/admin/categories/" + record.id}>
                             Modifier
                         </Link>
                         <span className="cursor-pointer hover:text-blue-500" onClick={() => {
-                            deleteServiceCategory(record.id);
+                            deleteCategory(record.id);
                         }}>Supprimer</span>
                     </Space>
                 )} />
