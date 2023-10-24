@@ -86,13 +86,17 @@ export default function ServiceCategoryForm(params) {
 
     return (
         <>
-            <form className={"form-wrapper mt-5"} onSubmit={handleSubmit(onSubmit)}>
+            <form className={`${params.isAdmin && 'admin'} form-wrapper mt-5`} onSubmit={handleSubmit(onSubmit)}>
 
                 <h1 className={"title-bold my-2 lg:my-10 text-center"}>{params.titleForm}</h1>
-                <input className={"input-form"} type={"text"} placeholder={"Nom de la catégorie pour les services"} {...register("name", { required: true})}/>
-                {errors.name && <p className={"italic text-red-500 mb-4"}>Veuillez ajouter le nom de la catégorie pour les services</p>}
 
-                <input className={"btn btn-secondary-darker cursor-pointer my-2 lg:my-10"} type={"submit"} value={`${params.submitText}`}/>
+                <div className={`input-wrapper ${params.isAdmin && 'admin'}`}>
+                    <label htmlFor={"name"}>Nom de la catégorie pour les services</label>
+                    <input type={"text"} placeholder={"Nom de la catégorie pour les services"} {...register("name", { required: true})}/>
+                    {errors.name && <p className={"italic text-red-500 mb-4"}>Veuillez ajouter le nom de la catégorie pour les services</p>}
+                </div>
+
+                <input className={`btn btn-secondary-darker cursor-pointer my-2 lg:my-10 w-fit mx-auto ${params.isAdmin && 'admin'}`} type={"submit"} value={`${params.submitText}`}/>
             </form>
             <ToastContainer className="toast-wrapper-custom"/>
         </>

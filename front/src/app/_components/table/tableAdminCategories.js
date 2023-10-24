@@ -2,7 +2,6 @@
 import {Space, Table} from "antd";
 import {useEffect, useState} from "react";
 import Link from "next/link";
-import {deleteServiceCategoryById, getServicesCategories} from "@/app/utils/service-categories";
 import {deleteCategoryById, getCategories} from "@/app/utils/categories";
 const { Column } = Table;
 
@@ -24,16 +23,16 @@ export default function TableAdminCategories() {
     }
 
     return (
-        <div className="custom-container my-10">
+        <div className="mt-5 mb-10 admin-table">
             <Table dataSource={data} >
                 <Column title="Id" dataIndex="id" key="id" width={100}/>
                 <Column title="Nom" dataIndex="name" key="name"/>
-                <Column title="Action" key="action" width={100} render={(_, record) => (
+                <Column title="Action" key="action" width={100} className={"admin-action-title"} render={(_, record) => (
                     <Space size="middle">
-                        <Link href={"/admin/categories/" + record.id}>
+                        <Link href={"/admin/categories/" + record.id} className={"admin-action"}>
                             Modifier
                         </Link>
-                        <span className="cursor-pointer hover:text-blue-500" onClick={() => {
+                        <span className="admin-action delete" onClick={() => {
                             deleteCategory(record.id);
                         }}>Supprimer</span>
                     </Space>

@@ -47,11 +47,11 @@ h4 {
 }
 
 .custom-container {
-  @apply px-4 max-w-screen-xl mx-auto;
+  @apply px-4 max-w-screen-xl mx-auto w-full;
 }
 
 .btn {
-  @apply flex items-center gap-x-2.5 px-5 py-2 font-bold text-center justify-center uppercase text-white bg-gray-500 mx-auto text-sm;
+  @apply flex items-center gap-x-2.5 px-5 py-2 font-bold text-center justify-center uppercase text-white bg-gray-500 text-sm;
 
   @screen lg {
     @apply text-xl;
@@ -123,6 +123,10 @@ h4 {
 
   &.margin-less {
     @apply m-0;
+  }
+
+  &.admin {
+    @apply bg-primary text-base normal-case font-normal;
   }
 }
 
@@ -196,11 +200,33 @@ h4 {
   @apply flex flex-col justify-center text-center mt-20;
 }
 
-.input-form {
-  @apply w-full p-2;
+.form-wrapper {
+  @apply w-full bg-secondary flex flex-col py-4 px-10 gap-4 mx-auto;
 
   @screen lg {
-    @apply w-4/5;
+    @apply w-1/2;
+  }
+
+  &.admin {
+    @apply bg-white w-10/12;
+  }
+
+  .input-wrapper {
+    @apply mx-auto w-full;
+
+    input, select, textarea {
+      @apply w-full p-2 flex flex-col;
+    }
+
+    &.admin {
+      input, select, textarea {
+        @apply border border-primary;
+      }
+    }
+
+    label {
+      @apply italic mb-1 block;
+    }
   }
 }
 
@@ -252,19 +278,30 @@ footer {
 }
 
 .page-wrapper {
-  @apply flex flex-col justify-between;
+  @apply flex flex-col;
   min-height: 100vh;
-}
 
-.form-wrapper {
-  @apply w-full bg-secondary flex flex-col p-4 gap-4 items-center mx-auto;
-
-  @screen lg {
-    @apply w-1/2;
-  }
-
-  @screen 2xl {
-    @apply w-1/3;
+  #main-content {
+    @apply flex flex-col grow w-full;
   }
 }
+
+.admin-table {
+  th.ant-table-cell.admin-action-title, .admin-action-title {
+    @apply text-right;
+  }
+}
+
+.admin-action {
+  @apply cursor-pointer;
+
+  &:hover {
+    @apply underline underline-offset-4;
+  }
+
+  &.delete {
+    @apply text-red-500;
+  }
+}
+
 

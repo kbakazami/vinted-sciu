@@ -7,8 +7,8 @@ const CategoryAdminPage = async ({params}) => {
     const category = await getCategoryById(params.id);
 
     return (
-        <div className={"mb-10"}>
-            <CategoryForm titleForm={"Modifier la catégorie"} submitText={"Enregistrer"} category={category} categoryId={params.id}/>
+        <div className={"mb-10 custom-container"}>
+            <CategoryForm titleForm={"Modifier la catégorie"} submitText={"Enregistrer"} category={category} categoryId={params.id} isAdmin={true}/>
         </div>
     )
 }

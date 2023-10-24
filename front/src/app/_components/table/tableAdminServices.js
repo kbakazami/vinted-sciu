@@ -24,18 +24,18 @@ export default function TableAdminServices() {
     }
 
     return (
-        <div className="custom-container my-10">
+        <div className="mt-5 mb-10 admin-table">
             <Table dataSource={data} >
                 <Column title="Id" dataIndex="id" key="id" width={50}/>
                 <Column title="Nom" dataIndex="title" key="title" width={200} />
                 <Column title="Description" dataIndex="description" key="description" ellipsis={true} width={600} />
                 <Column title="Categorie" dataIndex="serviceCategory" key="serviceCategory" render={category => category ? category.name : "" } />
-                <Column title="Action" key="action" render={(_, record) => (
+                <Column title="Action" key="action" className={"admin-action-title"} render={(_, record) => (
                     <Space size="middle">
-                        <Link href={"/admin/services/" + record.id}>
+                        <Link href={"/admin/services/" + record.id} className={"admin-action"}>
                             Modifier
                         </Link>
-                        <span className="cursor-pointer hover:text-blue-500" onClick={() => {
+                        <span className="admin-action delete" onClick={() => {
                             deleteService(record.id);
                         }}>Supprimer</span>
                     </Space>

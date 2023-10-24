@@ -34,18 +34,18 @@ export default function TableAdminProducts() {
 
     }
     return (
-        <div className="max-w-7xl mx-auto my-10">
+        <div className="mt-5 mb-10 admin-table">
             <Table dataSource={data} >
                 <Column title="Id" dataIndex="id" key="id" />
                 <Column title="Nom" dataIndex="title" key="title" />
                 <Column title="Description" dataIndex="description" key="description" />
                 <Column title="Categorie" dataIndex="category" key="category" render={category => category ? category.name : "" } />
-                <Column title="Action" key="action" render={(_, record) => (
+                <Column title="Action" key="action" className={"admin-action-title"} render={(_, record) => (
                     <Space size="middle">
-                        <Link href={"/admin/products/" + record.id}>
+                        <Link href={"/admin/products/" + record.id} className={"admin-action"}>
                             Modifier
                         </Link>
-                        <span className="cursor-pointer hover:text-blue-500" onClick={() => {
+                        <span className="admin-action delete" onClick={() => {
                             deleteProduct(record.id);
                         }}>Supprimer</span>
                     </Space>

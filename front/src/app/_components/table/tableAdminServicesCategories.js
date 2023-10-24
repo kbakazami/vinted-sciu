@@ -24,16 +24,16 @@ export default function TableAdminServicesCategories() {
     }
 
     return (
-        <div className="custom-container my-10">
+        <div className="mt-5 mb-10 admin-table">
             <Table dataSource={data} >
                 <Column title="Id" dataIndex="id" key="id" width={100}/>
                 <Column title="Nom" dataIndex="name" key="name"/>
-                <Column title="Action" key="action" width={100} render={(_, record) => (
+                <Column title="Action" key="action" width={100} className={"admin-action-title"} render={(_, record) => (
                     <Space size="middle">
-                        <Link href={"/admin/services/services-categories/" + record.id}>
+                        <Link href={"/admin/services-categories/" + record.id} className={"admin-action"}>
                             Modifier
                         </Link>
-                        <span className="cursor-pointer hover:text-blue-500" onClick={() => {
+                        <span className="admin-action delete" onClick={() => {
                             deleteServiceCategory(record.id);
                         }}>Supprimer</span>
                     </Space>
