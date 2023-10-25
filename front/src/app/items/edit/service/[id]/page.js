@@ -18,7 +18,7 @@ export default function EditService({params}) {
     }, []);
 
     return (
-        <div className={"text-center px-4"}>
+        <div className={"custom-container"}>
             <ServiceForm titleForm={"Modifier un service"} submitText={"Enregistrer"} service={service} serviceId={params.id}/>
         </div>
     )

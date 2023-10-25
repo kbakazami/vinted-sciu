@@ -1,20 +1,12 @@
-import axios from "axios";
+import {getProductById} from "@/app/utils/products";
+import ProductForm from "@/app/_components/form/product-form";
 
 const ProductAdminPage = async ({params}) => {
-
-const product = await axios.get("http://localhost:8000/api/articles/" + params.id);
+    const product = await getProductById(params.id);
 
     return (
-        <div>
-           <h1 className="text-center my-10">Gestion des produits !</h1>
-            <div className="max-w-7xl mx-auto my-10">
-                <div className="flex flex-col gap-y-2.5">
-                    <div className="flex flex-row gap-x-5">
-                        <p className="font-bold w-1/4">Nom</p>
-                        <p>{product.data.title}</p>
-                    </div>
-                </div>
-            </div>
+        <div className={"mb-10 custom-container"}>
+            <ProductForm titleForm={"Modifier le produit"} submitText={"Enregistrer"} product={product} productId={params.id} isAdmin={true}/>
         </div>
     )
 }

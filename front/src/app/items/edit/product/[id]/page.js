@@ -18,7 +18,7 @@ export default function EditProduct({params}) {
     }, []);
 
     return (
-        <div className={"text-center px-4"}>
+        <div className={"custom-container"}>
             <ProductForm titleForm={"Modifier un produit"} submitText={"Enregistrer"} product={product} productId={params.id}/>
         </div>
     )

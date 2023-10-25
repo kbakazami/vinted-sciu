@@ -60,3 +60,11 @@ export async function updateService(serviceName, description, serviceCategoryId,
         console.log(e);
     }
 }
+
+export async function deleteServiceById(serviceId) {
+    try {
+        return await axios.delete(`${API_URL}/services/${serviceId}`);
+    } catch (e) {
+        console.log(e);
+    }
+}

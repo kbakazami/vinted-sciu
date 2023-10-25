@@ -38,9 +38,13 @@ export default function ProductForm(params) {
         });
     }
 
-    const redirectToAccount = () => {
+    const redirectToPage = () => {
         setTimeout(() => {
-            router.push("/account/products");
+            if(params.isAdmin) {
+                router.push("/admin/products");
+            } else {
+                router.push("/account/products");
+            }
         }, 5000);
     }
 
@@ -68,7 +72,7 @@ export default function ProductForm(params) {
         if(response && response.status === 201)
         {
             showSuccessToast('Votre produit a bien été créé ! Vous serez redirigé dans un instant.');
-            redirectToAccount();
+            redirectToPage();
         } else {
             showErrorToast();
         }
@@ -79,7 +83,7 @@ export default function ProductForm(params) {
         if(response && response.status === 204)
         {
             showSuccessToast('Votre produit a bien été mis à jour ! Vous serez redirigé dans un instant.');
-            redirectToAccount();
+            redirectToPage();
         } else {
             showErrorToast();
         }
@@ -99,29 +103,44 @@ export default function ProductForm(params) {
         }
     }, [params.product]);
 
+    let classAdmin = '';
+    if(params.isAdmin)
+    {
+        classAdmin = 'admin';
+    }
 
     return (
         <>
-            <form className={"form-wrapper mt-5"} onSubmit={handleSubmit(onSubmit)}>
+            <form className={`form-wrapper mt-5 mb-10 ${classAdmin}`} onSubmit={handleSubmit(onSubmit)}>
 
-                <h1 className={"title-bold my-2 lg:my-10"}>{params.titleForm}</h1>
-                <input className={"input-form"} type={"text"} placeholder={"Nom de l'article"} {...register("title", { required: true})}/>
-                {errors.product_name && <p className={"italic text-red-500 mb-4"}>Veuillez ajouter le nom de l'article</p>}
+                <h1 className={"title-bold my-2 lg:my-10 text-center"}>{params.titleForm}</h1>
 
-                <textarea className={"input-form"} rows={8} placeholder={"Description de l'article"} {...register("description", {required: true})}/>
-                {errors.description && <p className={"italic text-red-500 mb-4"}>Veuillez rentrer une description</p>}
+                <div className={`input-wrapper ${classAdmin}`}>
+                    <label htmlFor={"title"}>Nom du produit</label>
+                    <input className={"input-form"} type={"text"} placeholder={"Nom de l'article"} {...register("title", { required: true})}/>
+                    {errors.title && <p className={"italic text-red-500 mb-4"}>Veuillez ajouter le nom de l'article</p>}
+                </div>
 
-                <select className={"input-form"} defaultValue={""} {...register("category", {required: true})}>
-                    <option value={""} disabled>Catégorie</option>
-                    {categories.map((category, key) => {
-                        return (
-                            <option key={key} value={category.id}>{category.name}</option>
-                        )
-                    })}
-                </select>
-                {errors.category_id && <p className={"italic text-red-500 mb-4"}>Veuillez choisir une catégorie</p>}
+                <div className={`input-wrapper ${classAdmin}`}>
+                    <label htmlFor={"title"}>Description de l'article</label>
+                    <textarea className={"input-form"} rows={8} placeholder={"Description de l'article"} {...register("description", {required: true})}/>
+                    {errors.description && <p className={"italic text-red-500 mb-4"}>Veuillez rentrer une description</p>}
+                </div>
 
-                <input className={"btn btn-secondary-darker cursor-pointer my-2 lg:my-10"} type={"submit"} value={`${params.submitText}`}/>
+                <div className={`input-wrapper ${classAdmin}`}>
+                    <label htmlFor={"title"}>Catégorie de l'article</label>
+                    <select className={"input-form"} defaultValue={""} {...register("category", {required: true})}>
+                        <option value={""} disabled>Catégorie</option>
+                        {categories.map((category, key) => {
+                            return (
+                                <option key={key} value={category.id}>{category.name}</option>
+                            )
+                        })}
+                    </select>
+                    {errors.category && <p className={"italic text-red-500 mb-4"}>Veuillez choisir une catégorie</p>}
+                </div>
+
+                <input className={`btn btn-secondary-darker cursor-pointer my-2 lg:my-10 w-fit mx-auto ${classAdmin}`} type={"submit"} value={`${params.submitText}`}/>
             </form>
             <ToastContainer className="toast-wrapper-custom"/>
         </>
