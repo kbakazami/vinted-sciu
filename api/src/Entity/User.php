@@ -68,6 +68,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(['getUsers'])]
     private ?Promo $promo = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $beecoins = null;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
@@ -284,6 +287,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPromo(?Promo $promo): static
     {
         $this->promo = $promo;
+
+        return $this;
+    }
+
+    public function getBeecoins(): ?int
+    {
+        return $this->beecoins;
+    }
+
+    public function setBeecoins(?int $beecoins): static
+    {
+        $this->beecoins = $beecoins;
 
         return $this;
     }

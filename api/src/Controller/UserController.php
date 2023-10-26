@@ -3,12 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Repository\EcoleRepository;
+use App\Repository\PromoRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -74,5 +77,32 @@ class UserController extends AbstractController
         $user = $this->getUser();
         $jsonUser = $serializer->serialize($user, 'json', ['groups' => 'getUsers']);
         return new JsonResponse($jsonUser, 200, [], true);
+    }
+
+    #[Route('/api/users/{id}', name: 'deleteUser', methods: ['DELETE'])]
+    public function deleteUser(User $user, EntityManagerInterface $em): JsonResponse
+    {
+        $em->remove($user);
+        $em->flush();
+        return new JsonResponse(null, 204);
+    }
+
+    #[Route('/api/users/{id}', name: 'updateUser', methods: ['PUT'])]
+    public function updateUser(User $currentUser,  Request $request, SerializerInterface $serializer, EntityManagerInterface $em, EcoleRepository $ecoleRepository, PromoRepository $promoRepository)
+    {
+        $updateUser = $serializer->deserialize($request->getContent(), User::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $currentUser]);
+
+        $content = $request->toArray();
+
+        $idPromo = $content['idPromo'] ?? -1;
+        $idEcole = $content['idEcole'] ?? -1;
+
+        $updateUser->setPromo($promoRepository->find($idPromo));
+        $updateUser->setEcole($ecoleRepository->find($idEcole));
+
+        $em->persist($updateUser);
+        $em->flush();
+
+        return new JsonResponse(null, 204);
     }
 }

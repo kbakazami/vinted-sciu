@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ArticleRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -40,6 +42,14 @@ class Article
     #[ORM\Column]
     #[Groups(['getArticles'])]
     private ?bool $isActive = null;
+
+    #[ORM\OneToMany(mappedBy: 'article', targetEntity: Gallery::class)]
+    private Collection $galleries;
+
+    public function __construct()
+    {
+        $this->galleries = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -102,6 +112,36 @@ class Article
     public function setIsActive(bool $isActive): static
     {
         $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Gallery>
+     */
+    public function getGalleries(): Collection
+    {
+        return $this->galleries;
+    }
+
+    public function addGallery(Gallery $gallery): static
+    {
+        if (!$this->galleries->contains($gallery)) {
+            $this->galleries->add($gallery);
+            $gallery->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGallery(Gallery $gallery): static
+    {
+        if ($this->galleries->removeElement($gallery)) {
+            // set the owning side to null (unless already changed)
+            if ($gallery->getArticle() === $this) {
+                $gallery->setArticle(null);
+            }
+        }
 
         return $this;
     }
