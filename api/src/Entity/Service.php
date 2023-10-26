@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ServiceRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -31,6 +33,14 @@ class Service
 
     #[ORM\Column]
     private ?bool $isActive = null;
+
+    #[ORM\OneToMany(mappedBy: 'service', targetEntity: Gallery::class)]
+    private Collection $galleries;
+
+    public function __construct()
+    {
+        $this->galleries = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -93,6 +103,36 @@ class Service
     public function setIsActive(bool $isActive): static
     {
         $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Gallery>
+     */
+    public function getGalleries(): Collection
+    {
+        return $this->galleries;
+    }
+
+    public function addGallery(Gallery $gallery): static
+    {
+        if (!$this->galleries->contains($gallery)) {
+            $this->galleries->add($gallery);
+            $gallery->setService($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGallery(Gallery $gallery): static
+    {
+        if ($this->galleries->removeElement($gallery)) {
+            // set the owning side to null (unless already changed)
+            if ($gallery->getService() === $this) {
+                $gallery->setService(null);
+            }
+        }
 
         return $this;
     }
