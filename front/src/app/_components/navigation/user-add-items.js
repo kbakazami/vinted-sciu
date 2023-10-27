@@ -9,7 +9,7 @@ export default function UserAddItems(props) {
     const { status } = useSession();
 
     return (
-        <div className="bg-secondary menu-wrapper-add-items hidden absolute right-0 top-9 w-52 shadow-xl">
+        <div className="bg-secondary menu-wrapper-add-items absolute right-0 top-10 w-52 shadow-xl">
             {status === "authenticated" &&
                 <>
                     <Button href={"/items/add/product"} content="Ajouter un produit" className="menu"/>

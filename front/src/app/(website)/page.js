@@ -2,12 +2,12 @@
 import Image from 'next/image';
 import Button from "@/app/_components/button";
 import Info from "@/app/_components/info";
-import introduction from './introduction.jpg';
+import introduction from '../introduction.jpg';
 import {Bubble, ChevronDown, List, User} from "@/app/_components/svg";
 import Card from "@/app/_components/card";
-import CatePull from './cate-pull.png';
-import ProductPull from './product-pull.png';
-import Annonces from './annonces.jpg';
+import CatePull from '../cate-pull.png';
+import ProductPull from '../product-pull.png';
+import Annonces from '../annonces.jpg';
 
 export default function Home() {
 

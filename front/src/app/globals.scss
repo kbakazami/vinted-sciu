@@ -78,7 +78,19 @@ h4 {
   }
 
   &.nav {
-    @apply w-10 h-10 m-0;
+    @apply w-8 h-8 m-0;
+
+    @screen xl {
+      @apply w-10 h-10;
+    }
+
+    .svg-btn-nav {
+      @apply w-4 h-4;
+
+      @screen xl {
+        @apply w-5 h-5;
+      }
+    }
   }
 
   &.menu {
@@ -163,20 +175,39 @@ h4 {
   }
 }
 
-.nav-wrapper {
-  .mobile-link {
+.link-hover {
+  @apply transition ease-in-out duration-300;
 
-    &.open {
-      @apply p-4 border-b border-secondary-darker;
-    }
+  &:hover {
+    @apply text-secondary-darker;
+  }
+}
+
+.nav-wrapper {
+  @apply z-10;
+
+  .mobile-link {
+      @apply px-5 py-2.5 border-b border-secondary-darker;
 
     .mobile-open {
       @apply w-auto bg-transparent m-0 p-0 text-primary font-normal normal-case;
     }
   }
 
-  &.open {
-    @apply absolute inset-x-0 top-20 bottom-0 bg-white pb-8 overflow-auto;
+  .sub-category-wrapper, .sub-services-wrapper {
+    @apply absolute top-0 right-0 z-10 w-full h-full transition ease-in-out duration-500 bg-white;
+
+    .sub-category-title {
+      @apply bg-secondary/30 py-2 text-center relative text-base cursor-pointer;
+    }
+  }
+
+  .see-all {
+    @apply py-2.5 px-5 font-bold transition ease-in-out duration-300;
+
+    &:hover {
+      @apply text-secondary-darker;
+    }
   }
 }
 

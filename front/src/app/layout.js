@@ -1,8 +1,9 @@
 import './globals.scss';
 import localFont from 'next/font/local';
-import Header from "@/app/_components/header";
 import AuthProvider from "@/app/_components/auth-provider";
 import Footer from "@/app/_components/footer";
+import HeaderDesktop from "@/app/_components/header/desktop";
+import HeaderMobile from "@/app/_components/header/mobile";
 
 const poppins = localFont({
   src: [
@@ -32,7 +33,6 @@ export default function RootLayout({ children }) {
       <body>
         <AuthProvider>
           <div className={"page-wrapper"}>
-            <Header/>
             <main id={"main-content"}>
                 {children}
             </main>
