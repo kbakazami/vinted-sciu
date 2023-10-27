@@ -33,8 +33,6 @@ export default function RootLayout({ children }) {
       <body>
         <AuthProvider>
           <div className={"page-wrapper"}>
-            <HeaderDesktop/>
-            <HeaderMobile/>
             <main id={"main-content"}>
                 {children}
             </main>

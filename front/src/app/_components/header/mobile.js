@@ -104,7 +104,7 @@ export default function HeaderMobile() {
                 <div className={`${!showMenu && 'hidden'} absolute top-20 bg-white inset-x-0 bottom-0 pb-8 overflow-y-auto overflow-x-hidden nav-wrapper`} ref={refMenu}>
                     <ul className={"flex flex-col mx-auto text-sm"}>
                         <li>
-                            <button onClick={() => showSubMenu('categories')} className={"mobile-link w-full text-left relative"}>
+                            <button onClick={() => showSubMenu('categories')} className={"mobile-link link-hover w-full text-left relative"}>
                                 Catalogue
                                 <ChevronRight className={"absolute right-4 w-6 h-6 top-1/2 -translate-y-1/2"}/>
                             </button>
@@ -118,7 +118,7 @@ export default function HeaderMobile() {
                                     {
                                         categories.map((category, key) => {
                                             return (
-                                                <Link key={key} href={`/catalog/${category.name}`} className={"mobile-link"}>
+                                                <Link key={key} href={`/catalog/${category.name}`} className={"mobile-link link-hover"}>
                                                     {category.name}
                                                 </Link>
                                             )
@@ -132,7 +132,7 @@ export default function HeaderMobile() {
 
                         </li>
                         <li>
-                            <button onClick={() => showSubMenu('services')} className={"mobile-link w-full text-left relative"}>
+                            <button onClick={() => showSubMenu('services')} className={"mobile-link link-hover w-full text-left relative"}>
                                 Annonces & Services
                                 {servicesCategories.length !== 0 &&
                                     <ChevronRight className={"absolute right-4 w-6 h-6 top-1/2 -translate-y-1/2"}/>
@@ -147,7 +147,7 @@ export default function HeaderMobile() {
                                     {
                                         servicesCategories.map((service, key) => {
                                             return (
-                                                <Link key={key} href={`/services/${service.name}`} className={"mobile-link"}>
+                                                <Link key={key} href={`/services/${service.name}`} className={"mobile-link link-hover"}>
                                                     {service.name}
                                                 </Link>
                                             )
@@ -159,27 +159,27 @@ export default function HeaderMobile() {
                                 </div>
                             </div>
                         </li>
-                        <li className={"mobile-link"}><Link href={"#"}>Charte du bon utilisateur</Link></li>
-                        <li className={"mobile-link"}><Link href={"#"}>Nos conseils et astuces</Link></li>
-                        <li className={"mobile-link"}>
+                        <li className={"mobile-link link-hover"}><Link href={"#"}>Charte du bon utilisateur</Link></li>
+                        <li className={"mobile-link link-hover"}><Link href={"#"}>Nos conseils et astuces</Link></li>
+                        <li className={"mobile-link link-hover"}>
                             <Link href={"/account/wishlist"} className={"flex flex-row items-center gap-x-2"}>
                                 <Heart/>
                                 Ma wishlist
                             </Link>
                         </li>
-                        <li className={"mobile-link"}>
+                        <li className={"mobile-link link-hover"}>
                             <Link href={"/items/add/product"} className={"flex flex-row items-center gap-x-2"}>
                                 <Plus/>
                                 Ajouter un produit
                             </Link>
                         </li>
-                        <li className={"mobile-link"}>
+                        <li className={"mobile-link link-hover"}>
                             <Link href={"/items/add/service"} className={"flex flex-row items-center gap-x-2"}>
                                 <Plus/>
                                 Ajouter un service/une annonce
                             </Link>
                         </li>
-                        <li className={"mobile-link"}>
+                        <li className={"mobile-link link-hover"}>
                             <Link href={"/account"} className={"flex flex-row items-center gap-x-2"}>
                                 <User/>
                                 Mon compte

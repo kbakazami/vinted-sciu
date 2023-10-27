@@ -175,15 +175,19 @@ h4 {
   }
 }
 
+.link-hover {
+  @apply transition ease-in-out duration-300;
+
+  &:hover {
+    @apply text-secondary-darker;
+  }
+}
+
 .nav-wrapper {
   @apply z-10;
 
   .mobile-link {
-      @apply px-5 py-2.5 border-b border-secondary-darker transition ease-in-out duration-300;
-
-    &:hover {
-      @apply text-secondary-darker;
-    }
+      @apply px-5 py-2.5 border-b border-secondary-darker;
 
     .mobile-open {
       @apply w-auto bg-transparent m-0 p-0 text-primary font-normal normal-case;
