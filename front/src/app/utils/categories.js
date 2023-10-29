@@ -1,4 +1,5 @@
 import axios from "axios";
+import {uploadImage} from "@/app/utils/upload-file";
 
 const API_URL = 'http://localhost:8000/api'
 
@@ -21,10 +22,17 @@ export async function getCategoryById(categoryId) {
     }
 }
 
-export async function addCategory(categoryName) {
+export async function addCategory(categoryName, categoryPictureName, form) {
     try {
+        let fileName = categoryPictureName;
+
+        if(form) {
+            fileName = await uploadImage(form, 'media/categories');
+        }
+
         return await axios.post(`${API_URL}/categories`, JSON.stringify({
-            name: categoryName
+            name: categoryName,
+            image: fileName
         }),{ headers: {
                 "Content-Type" : "application/json",
             }});
@@ -33,10 +41,17 @@ export async function addCategory(categoryName) {
     }
 }
 
-export async function updateCategory(categoryName, categoryId) {
+export async function updateCategory(categoryName, categoryId, categoryPictureName, form) {
     try {
+        let fileName = categoryPictureName;
+
+        if(form) {
+            fileName = await uploadImage(form, 'media/categories');
+        }
+
         return await axios.put(`${API_URL}/categories/${categoryId}`, JSON.stringify({
-            name: categoryName
+            name: categoryName,
+            image: fileName
         }),{ headers: {
                 "Content-Type" : "application/json",
             }});
