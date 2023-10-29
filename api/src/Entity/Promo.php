@@ -14,11 +14,11 @@ class Promo
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['getUsers'])]
+    #[Groups(['getUsers', 'getPromos'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['getUsers'])]
+    #[Groups(['getUsers', 'getPromos'])]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'promo', targetEntity: User::class)]
