@@ -1,6 +1,7 @@
 import NextAuth from "next-auth/next";
 import axios from "axios";
 import CredentialsProvider from "next-auth/providers/credentials";
+import {getCurrentUser} from "@/app/utils/user";
 
 const API_URL = 'http://localhost:8000/api'
 
@@ -27,14 +28,10 @@ const handler = NextAuth({
                         }});
 
                     const data = response.data;
-                    let user = null;
+
                     if(data.token) {
 
-                        const base64Url = data.token.split('.')[1];
-                        const base64 = base64Url.replace('-','+').replace('-','/');
-                        user = JSON.parse(atob(base64));
-
-                        return user;
+                        return await getCurrentUser(data.token);
                     }
 
                     return null;
