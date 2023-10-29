@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -70,6 +71,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(nullable: true)]
     private ?int $beecoins = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $activationDate = null;
+
+    #[ORM\Column]
+    private ?bool $isSchoolAdministrator = null;
 
     public function __construct()
     {
@@ -299,6 +306,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setBeecoins(?int $beecoins): static
     {
         $this->beecoins = $beecoins;
+
+        return $this;
+    }
+
+    public function getActivationDate(): ?\DateTimeInterface
+    {
+        return $this->activationDate;
+    }
+
+    public function setActivationDate(?\DateTimeInterface $activationDate): static
+    {
+        $this->activationDate = $activationDate;
+
+        return $this;
+    }
+
+    public function isIsSchoolAdministrator(): ?bool
+    {
+        return $this->isSchoolAdministrator;
+    }
+
+    public function setIsSchoolAdministrator(bool $isSchoolAdministrator): static
+    {
+        $this->isSchoolAdministrator = $isSchoolAdministrator;
 
         return $this;
     }
