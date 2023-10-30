@@ -28,6 +28,7 @@ class Category
     private Collection $articles;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['getCategories'])]
     private ?string $image = null;
 
     public function __construct()
