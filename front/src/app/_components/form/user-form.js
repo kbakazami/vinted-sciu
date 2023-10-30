@@ -1,17 +1,24 @@
 "use client";
 import {useForm} from "react-hook-form";
-import {toast, ToastContainer} from "react-toastify";
 import {useRouter} from "next/navigation";
-import {addCategory, getCategories, updateCategory} from "@/app/utils/categories";
 import {useEffect, useState} from "react";
 import {readUploadedFile} from "@/app/utils/read-file";
+import {getSchoolById, getSchools} from "@/app/utils/schools";
+import {getPromoById, getPromos} from "@/app/utils/promos";
+import {updateUser} from "@/app/utils/user";
+import {useSession} from "next-auth/react";
 import Image from "next/image";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function UserForm(params) {
     const { register, handleSubmit,setValue, formState: { errors } } = useForm();
     const router = useRouter();
+
     const [promos, setPromos] = useState([]);
     const [schools, setSchools] = useState([]);
+
+    const { update } = useSession();
 
     const showSuccessToast = (message) => {
         toast.success(message, {
@@ -47,7 +54,7 @@ export default function UserForm(params) {
     }
 
     const onSubmit = async (data) => {
-        return params.category
+        return params.user
             ? editUser(data)
             : createUser(data);
     }
@@ -87,9 +94,23 @@ export default function UserForm(params) {
 
         let pictureName = picture ? picture.name : params.user.picture;
 
-        const response = await updateCategory(data.name, params.userId, pictureName, form);
-        if(response && response.status === 204)
+        const response = await updateUser(data.firstName, data.lastName, data.email, data.promo, data.ecole, params.user.id, pictureName, form);
+
+        if(response.responseAxios && response.responseAxios.status === 204)
         {
+            const promo = await getPromoById(data.promo);
+            const school = await getSchoolById(data.ecole);
+
+            await update({
+                roles: params.user.roles,
+                lastName: data.lastName,
+                firstName: data.firstName,
+                picture: response.userPicture,
+                isActive: params.user.isActive,
+                ecole: school,
+                promo: promo
+            });
+
             showSuccessToast('Les informations ont bien été mise à jour ! Vous serez redirigé dans un instant.');
             redirectToAccount();
         } else {
@@ -108,13 +129,19 @@ export default function UserForm(params) {
     useEffect(() => {
 
         if(params.user) {
-            const fields = ['lastName','firstName','email'];
+            const fields = ['lastName','firstName','email','promo','ecole'];
 
             fields.forEach(field => {
-                setValue(field, params.user[field]);
+                if(field === 'promo' && params.user['promo']) {
+                    setValue(field, params.user[field].id);
+                } else if(field === 'ecole' && params.user['ecole']) {
+                    setValue(field, params.user[field].id);
+                } else {
+                    setValue(field, params.user[field]);
+                }
             });
 
-            if(params.user.image !== null) {
+            if(params.user.picture !== null) {
                 loadPicture();
             }
         }
@@ -127,47 +154,104 @@ export default function UserForm(params) {
     }
 
     const getPromosAndSchoolsList = async () => {
-        const response = await getCategories();
-        setCategories(response);
+        const schoolsList = await getSchools();
+        setSchools(schoolsList);
+
+        const promosList = await getPromos();
+        setPromos(promosList);
+    }
+
+    useEffect(() => {
+        getPromosAndSchoolsList();
+    }, [])
+
+    let classAdmin = '';
+    let isDisabled = true;
+    if(params.isAdmin)
+    {
+        classAdmin = 'admin';
+        isDisabled = false;
     }
 
     return (
         <>
-            <form className={`${params.isAdmin && 'admin'} form-wrapper mt-5`} onSubmit={handleSubmit(onSubmit)}>
+            <form className={`${classAdmin} form-wrapper mt-5`} onSubmit={handleSubmit(onSubmit)}>
 
                 <h1 className={"title-bold my-2 lg:my-10 text-center"}>{params.titleForm}</h1>
 
-                <div className={`input-wrapper ${params.isAdmin && 'admin'}`}>
-                    <label htmlFor={"lastName"}>Nom</label>
-                    <input type={"text"} placeholder={"Nom"} {...register("lastName", { required: true})} disabled={true}/>
-                    {errors.lastName && <p className={"italic text-red-500 mb-4"}>Veuillez ajouter un nom</p>}
+                <div className={`input-wrapper ${classAdmin}`}>
+                    <label htmlFor={"name"}>Image de profil</label>
+                    <input type={"file"} placeholder={"Image de la catégorie"} {...register("image")} onChange={handleChange}/>
+                    {params.user && params.user.picture !== null &&
+                        <p className={"italic text-red-500"}>ATTENTION : si vous ne voulez pas changer l'image, ne modifiez pas le champ ci-dessus ou l'image sera écrasée</p>
+                    }
+                    {errors.image && <p className={"italic text-red-500 mb-4"}>Veuillez ajouter l'image de l'utilisateur</p>}
                 </div>
 
-                <div className={`input-wrapper ${params.isAdmin && 'admin'}`}>
-                    <label htmlFor={"firstName"}>Nom</label>
-                    <input type={"text"} placeholder={"Prénom"} {...register("firstName", { required: true})} disabled={true}/>
-                    {errors.firstName && <p className={"italic text-red-500 mb-4"}>Veuillez ajouter un prénom</p>}
+                <div className={"flex flex-row gap-x-10 items-center justify-between"}>
+                    {params.user && actualImage && <div>
+                        <p className={"font-bold italic"}>Image actuelle : </p>
+                        <div className={"w-32 h-32 rounded-full relative"}>
+                            <Image src={`data:image/png;base64,${actualImage}`} alt="Image actuelle" className={"object-cover w-full h-full rounded-full"} width={500} height={500}/>
+                        </div>
+                    </div>
+                    }
+                    {preview && <div>
+                        <p className={"font-bold italic"}>Nouvelle image :</p>
+                        <div className={"w-32 h-32 rounded-full relative"}>
+                            <Image src={preview} alt="preview" className={"object-cover w-full h-full rounded-full"} width={500} height={500}/>
+                        </div>
+                    </div>
+                    }
                 </div>
 
-                <div className={`input-wrapper ${params.isAdmin && 'admin'}`}>
-                    <label htmlFor={"email"}>Nom</label>
-                    <input type={"text"} placeholder={"Email"} {...register("email", { required: true})} disabled={true}/>
+                <div className={"flex flex-row gap-x-4"}>
+                    <div className={`input-wrapper ${classAdmin}`}>
+                        <label htmlFor={"lastName"}>Nom</label>
+                        <input type={"text"} placeholder={"Nom"} {...register("lastName", { required: true})} disabled={isDisabled}/>
+                        {errors.lastName && <p className={"italic text-red-500 mb-4"}>Veuillez ajouter un nom</p>}
+                    </div>
+
+                    <div className={`input-wrapper ${classAdmin}`}>
+                        <label htmlFor={"firstName"}>Prénom</label>
+                        <input type={"text"} placeholder={"Prénom"} {...register("firstName", { required: true})} disabled={isDisabled}/>
+                        {errors.firstName && <p className={"italic text-red-500 mb-4"}>Veuillez ajouter un prénom</p>}
+                    </div>
+                </div>
+
+                <div className={`input-wrapper ${classAdmin}`}>
+                    <label htmlFor={"email"}>Email</label>
+                    <input type={"text"} placeholder={"Email"} {...register("email", { required: true})} disabled={isDisabled}/>
                     {errors.email && <p className={"italic text-red-500 mb-4"}>Veuillez ajouter un email</p>}
                 </div>
 
-                {/*<div className={`input-wrapper ${classAdmin}`}>*/}
-                {/*    <label htmlFor={"promo"}>Promo</label>*/}
-                {/*    <select className={"input-form"} defaultValue={""} {...register("promo", {required: true})}>*/}
-                {/*        <option value={""} disabled>Promo</option>*/}
-                {/*        {categories.map((category, key) => {*/}
-                {/*            return (*/}
-                {/*                <option key={key} value={category.id}>{category.name}</option>*/}
-                {/*            )*/}
-                {/*        })}*/}
-                {/*    </select>*/}
-                {/*    {errors.category && <p className={"italic text-red-500 mb-4"}>Veuillez choisir une catégorie</p>}*/}
-                {/*</div>*/}
+                <div className={"flex flex-row gap-x-4"}>
+                    <div className={`input-wrapper ${classAdmin}`}>
+                        <label htmlFor={"promo"}>Promo</label>
+                        <select className={"input-form"} defaultValue={""} {...register("promo", {required: true})}>
+                            <option value={""} disabled>Promo</option>
+                            {promos.map((promo, key) => {
+                                return (
+                                    <option key={key} value={promo.id}>{promo.name}</option>
+                                )
+                            })}
+                        </select>
+                        {errors.promo && <p className={"italic text-red-500 mb-4"}>Veuillez choisir une promo</p>}
+                    </div>
 
+                    <div className={`input-wrapper ${classAdmin}`}>
+                        <label htmlFor={"ecole"}>École</label>
+                        <select className={"input-form"} defaultValue={""} {...register("ecole", {required: true})}>
+                            <option value={""} disabled>École</option>
+                            {schools.map((school, key) => {
+                                return (
+                                    <option key={key} value={school.id}>{school.name}</option>
+                                )
+                            })}
+                        </select>
+                        {errors.ecole && <p className={"italic text-red-500 mb-4"}>Veuillez choisir une école</p>}
+                    </div>
+                </div>
 
                 <input className={`btn btn-secondary-darker cursor-pointer my-2 lg:my-10 w-fit mx-auto ${params.isAdmin && 'admin'}`} type={"submit"} value={`${params.submitText}`}/>
             </form>

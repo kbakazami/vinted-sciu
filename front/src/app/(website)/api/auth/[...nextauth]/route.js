@@ -30,11 +30,11 @@ const handler = NextAuth({
                     const data = response.data;
 
                     if(data.token) {
-
-                        return await getCurrentUser(data.token);
+                        const user = await getCurrentUser(data.token);
+                        return user;
+                    } else {
+                        return null;
                     }
-
-                    return null;
                 } catch (e) {
                     console.log(e);
                 }
@@ -46,16 +46,53 @@ const handler = NextAuth({
         signinKey: process.env.JWT_SIGNING_PRIVATE_KEY,
     },
     callbacks: {
-        async session({session, token}) {
-            session.user = token.user;
-            return session;
-        },
-        async jwt({token, user})
+        async jwt({token, user, session, trigger})
         {
-            if(user) {
-                token.user = user;
+            if(trigger === "update")
+            {
+                token.roles = session.roles;
+                token.lastName = session.lastName;
+                token.firstName = session.firstName;
+                token.picture = session.picture;
+                token.isActive = session.isActive;
+                token.ecole = session.ecole;
+                token.promo = session.promo;
             }
+
+            if(user) {
+                return {
+                    ...token,
+                    id: user.id,
+                    roles: user.roles,
+                    lastName: user.lastName,
+                    firstName: user.firstName,
+                    picture: user.picture,
+                    isActive: user.isActive,
+                    ecole: user.ecole,
+                    promo: user.promo
+                }
+            }
+
             return token;
+        },
+        async session({session, token, user}) {
+
+            return {
+                ...session,
+                user: {
+                    ...session.user,
+                    id: token.id,
+                    roles: token.roles,
+                    lastName: token.lastName,
+                    firstName: token.firstName,
+                    picture: token.picture,
+                    isActive: token.isActive,
+                    ecole: token.ecole,
+                    promo: token.promo
+                }
+            };
+
+            return session;
         }
     },
     pages: {

@@ -1,3 +1,4 @@
+"use client";
 import Informations from "@/app/_components/user/Informations";
 
 export default function Account() {

@@ -10,7 +10,8 @@ export async function register(first_name, last_name, email, password) {
             email: email,
             password: password,
             is_active:0,
-            beecoin:0
+            beecoin:0,
+            is_school_administrator: 0,
         }),{
             headers: {
                 "Content-Type" : "application/json",
