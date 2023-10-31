@@ -7,10 +7,14 @@ import {addProduct, updateProduct} from "@/app/utils/products";
 import {useRouter} from "next/navigation";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Image from "next/image";
+import {message} from "antd";
+import {addImage} from "@/app/utils/gallery";
 
 export default function ProductForm(params) {
 
     const { register, handleSubmit,setValue, formState: { errors } } = useForm();
+    const [preview, setPreview] = useState([]);
 
     const showSuccessToast = (message) => {
         toast.success(message, {
@@ -25,8 +29,8 @@ export default function ProductForm(params) {
         });
     }
 
-    const showErrorToast = () => {
-        toast.error('Une erreur est survenue. Veuillez réessayer dans un instant. Si le problème persiste, contactez Laurie BEAUJOUEN', {
+    const showErrorToast = (message = 'Une erreur est survenue. Veuillez réessayer dans un instant. Si le problème persiste, contactez Laurie BEAUJOUEN') => {
+        toast.error(message, {
             position: "top-center",
             autoClose: 5000,
             hideProgressBar: false,
@@ -68,14 +72,27 @@ export default function ProductForm(params) {
     }
 
     const createProduct = async (data) => {
-        const response = await addProduct(data.title, data.description, data.category, 1);
-        if(response && response.status === 201)
+        console.log(data.image);
+        let form = null;
+
+        if(data.image.length)
         {
-            showSuccessToast('Votre produit a bien été créé ! Vous serez redirigé dans un instant.');
-            redirectToPage();
-        } else {
-            showErrorToast();
+            form = new FormData();
+            form.append("fileUpload", data.image)
         }
+
+        for(let i = 0; i < data.image.length; i++)
+        {
+            const galleryResponse = await addImage()
+        }
+        // const response = await addProduct(data.title, data.description, data.category, 1);
+        // if(response && response.status === 201)
+        // {
+        //     showSuccessToast('Votre produit a bien été créé ! Vous serez redirigé dans un instant.');
+        //     redirectToPage();
+        // } else {
+        //     showErrorToast();
+        // }
     }
 
     const editProduct = async (data) => {
@@ -103,6 +120,27 @@ export default function ProductForm(params) {
         }
     }, [params.product]);
 
+    const [isPictureMaxLengthAbove, setIsPictureMaxLengthAbove] = useState(false);
+
+    const handleChange = (e) => {
+        if(e.target.files.length) {
+            const files = [];
+
+            if(e.target.files.length > 5)
+            {
+                setIsPictureMaxLengthAbove(true);
+            } else {
+                setIsPictureMaxLengthAbove(false);
+
+                for(let i = 0; i < e.target.files.length; i++)
+                {
+                    files[i] = (URL.createObjectURL(e.target.files[i]));
+                }
+                setPreview([files]);
+            }
+        }
+    }
+
     let classAdmin = '';
     if(params.isAdmin)
     {
@@ -111,15 +149,31 @@ export default function ProductForm(params) {
 
     return (
         <>
-            <form className={`form-wrapper mt-5 mb-10 ${classAdmin}`} onSubmit={handleSubmit(onSubmit)}>
+            <form className={`form-wrapper product mt-5 mb-10 ${classAdmin}`} onSubmit={handleSubmit(onSubmit)}>
 
                 <h1 className={"title-bold my-2 lg:my-10 text-center"}>{params.titleForm}</h1>
 
-                <div className={`input-wrapper ${classAdmin}`}>
-                    <label htmlFor={"title"}>Nom du produit</label>
-                    <input className={"input-form"} type={"text"} placeholder={"Nom de l'article"} {...register("title", { required: true})}/>
-                    {errors.title && <p className={"italic text-red-500 mb-4"}>Veuillez ajouter le nom de l'article</p>}
+                <div className={"flex flex-row gap-4"}>
+                    <div className={`input-wrapper ${classAdmin}`}>
+                        <label htmlFor={"title"}>Nom du produit</label>
+                        <input className={"input-form"} type={"text"} placeholder={"Nom de l'article"} {...register("title", { required: true})}/>
+                        {errors.title && <p className={"italic text-red-500 mb-4"}>Veuillez ajouter le nom de l'article</p>}
+                    </div>
+
+                    <div className={`input-wrapper ${classAdmin}`}>
+                        <label htmlFor={"title"}>Catégorie de l'article</label>
+                        <select className={"input-form"} defaultValue={""} {...register("category", {required: true})}>
+                            <option value={""} disabled>Catégorie</option>
+                            {categories.map((category, key) => {
+                                return (
+                                    <option key={key} value={category.id}>{category.name}</option>
+                                )
+                            })}
+                        </select>
+                        {errors.category && <p className={"italic text-red-500 mb-4"}>Veuillez choisir une catégorie</p>}
+                    </div>
                 </div>
+
 
                 <div className={`input-wrapper ${classAdmin}`}>
                     <label htmlFor={"title"}>Description de l'article</label>
@@ -128,19 +182,32 @@ export default function ProductForm(params) {
                 </div>
 
                 <div className={`input-wrapper ${classAdmin}`}>
-                    <label htmlFor={"title"}>Catégorie de l'article</label>
-                    <select className={"input-form"} defaultValue={""} {...register("category", {required: true})}>
-                        <option value={""} disabled>Catégorie</option>
-                        {categories.map((category, key) => {
-                            return (
-                                <option key={key} value={category.id}>{category.name}</option>
-                            )
-                        })}
-                    </select>
-                    {errors.category && <p className={"italic text-red-500 mb-4"}>Veuillez choisir une catégorie</p>}
+                    <label htmlFor={"image"}>Image(s) de l'article</label>
+                    <input type={"file"} multiple={true} placeholder={"Image(s) de l'article"} {...register("image")} onChange={handleChange}/>
+                    {isPictureMaxLengthAbove &&
+                        <p className={"italic text-red-500"}>ATTENTION : Vous ne pouvez ajouter que 5 images maximum</p>
+                    }
                 </div>
 
-                <input className={`btn btn-secondary-darker cursor-pointer my-2 lg:my-10 w-fit mx-auto ${classAdmin}`} type={"submit"} value={`${params.submitText}`}/>
+
+                {preview && <div>
+                    <p className={"font-bold italic"}>Nouvelles images :</p>
+                    <div className={"flex flex-row flex-wrap gap-4"}>
+                        {
+                            preview[0] && preview[0].map((picture, key) => {
+                                return (
+                                    <div className={"w-60 h-80 relative"} key={key}>
+                                        <Image src={picture} alt="preview" className={"object-cover w-full h-full"} width={500} height={500}/>
+                                    </div>
+                                )
+                            })
+
+                        }
+                    </div>
+                </div>
+                }
+
+                <input className={`btn btn-secondary-darker cursor-pointer my-2 lg:my-10 w-fit mx-auto ${classAdmin}`} type={"submit"} value={`${params.submitText}`} disabled={isPictureMaxLengthAbove}/>
             </form>
             <ToastContainer className="toast-wrapper-custom"/>
         </>
