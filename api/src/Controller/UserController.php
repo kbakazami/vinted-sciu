@@ -106,7 +106,7 @@ class UserController extends AbstractController
         return new JsonResponse(null, 204);
     }
 
-    #[Route('/api/users/{id}/activate', name: 'activateUser', methods: ['PUT'])]
+    #[Route('/api/users/{id}/activate', name: 'activateUser', methods: ['PATCH'])]
     public function activateUser(User $user, EntityManagerInterface $em): JsonResponse
     {
         if(!$user->getActivationDate()){
@@ -114,9 +114,9 @@ class UserController extends AbstractController
             $user->setIsFirstActive(true);
 
             if($user->isIsSchoolAdministrator()){
-                $user->setBeecoins(3);
+                $user->setBeecoins($user->getBeecoins() + 3);
             }else{
-                $user->setBeecoins(5);
+                $user->setBeecoins($user->getBeecoins() + 5);
             }
         }
         $user->setIsActive(true);
